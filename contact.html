@@ -5,16 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Контакты — Портфолио Беки</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #121212; color: #eee; margin: 0; padding: 0; }
-    header { background: #1f1f1f; padding: 20px; text-align: center; font-size: 2em; font-weight: bold; }
-    nav { background: #272727; padding: 10px; text-align: center; }
-    nav a { color: #a0e7e5; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    nav a:hover { color: #ff4c4c; }
-    main { padding: 20px; max-width: 700px; margin: auto; }
-    footer { text-align: center; padding: 15px; background: #1f1f1f; font-size: 0.9em; color: #888; }
-    .contact-info { line-height: 1.8em; }
-    a.contact-link { color: #a0e7e5; text-decoration: none; font-weight: bold; }
-    a.contact-link:hover { color: #ff4c4c; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #a0e7e5;
+      text-shadow: 0 0 10px #00ffff66;
+    }
+
+    nav {
+      background: #272727;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #a0e7e5;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff4c4c;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    main.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff66;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+    }
+
+    .contact-info {
+      line-height: 1.8em;
+      margin-top: 20px;
+    }
+
+    a.contact-link {
+      color: #a0e7e5;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    a.contact-link:hover {
+      color: #ff4c4c;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1f1f1f;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
@@ -25,7 +97,7 @@
     <a href="projects.html">Проекты</a>
     <a href="contact.html">Контакты</a>
   </nav>
-  <main>
+  <main id="main-content">
     <h1>Контакты</h1>
     <div class="contact-info">
       <p>📧 Email: <a href="mailto:bekzatik22.088@gmail.com" class="contact-link">bekzatik22.088@gmail.com</a></p>
@@ -35,6 +107,17 @@
       <p>💬 Telegram: <a href="https://t.me/pizdaproebik" target="_blank" class="contact-link">@bekish</a></p>
     </div>
   </main>
+  <footer>© 2025 Бека братан</footer>
+
+  <script>
+    // Плавное появление при загрузке
+    window.addEventListener('load', () => {
+      document.getElementById('main-content').classList.add('visible');
+    });
+  </script>
+</body>
+</html>
+
   <footer>© 2025 Бека братан</footer>
 </body>
 </html>
