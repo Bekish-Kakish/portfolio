@@ -7,10 +7,11 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #121212;
+      background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
       color: #eee;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     header {
@@ -19,6 +20,8 @@
       text-align: center;
       font-size: 2em;
       font-weight: bold;
+      color: #a0e7e5;
+      text-shadow: 0 0 10px #00ffff44;
     }
 
     nav {
@@ -32,6 +35,7 @@
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
+      transition: 0.3s;
     }
 
     nav a:hover {
@@ -40,7 +44,7 @@
 
     main {
       padding: 20px;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
     }
 
@@ -51,10 +55,23 @@
       border-radius: 50%;
       display: block;
       margin: 30px auto;
+      box-shadow: 0 0 10px #00ffff44;
     }
 
     .section {
-      margin-bottom: 80px;
+      margin-bottom: 60px;
+      background: #1e1e1e;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .text-photo {
@@ -75,6 +92,7 @@
 
     .text-photo p {
       width: 60%;
+      line-height: 1.6em;
     }
 
     footer {
@@ -83,6 +101,7 @@
       background: #1f1f1f;
       font-size: 0.9em;
       color: #888;
+      margin-top: 40px;
     }
 
     @media (max-width: 768px) {
@@ -114,12 +133,12 @@
     </div>
 
     <div class="section text-photo">
-      <p>Люблю кодить, оптимизировать C++, делать сайты — вот этот, кстати, тоже сам сделал. Вижу баг — фиксирую. Учусь думать, как инженер. </p>
+      <p>Люблю кодить, оптимизировать C++, делать сайты — вот этот, кстати, тоже сам сделал. Вижу баг — фиксирую. Учусь думать, как инженер.</p>
       <img src="https://images.unsplash.com/photo-1551033540-621b1f9728b1?auto=format&fit=crop&w=800&q=80" alt="Кодинг" />
     </div>
 
     <div class="section text-photo">
-      <p>Занимался боксом, стоял на ринге — а теперь стою на ногах в жизни. Сдал ЕНТ на 93 балла, и это только начало.</p>
+      <p>Занимался боксом, стоял на ринге — а теперь стою на ногах в жизни. Сдал ЕНТ на 93 балла, и это только начало. Бойцовский дух не пропьёшь 💥</p>
       <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=800&q=80" alt="Бокс" />
     </div>
 
@@ -129,5 +148,25 @@
     </div>
   </main>
   <footer>© 2025 Бека братан</footer>
+
+  <script>
+    // Анимация появления секций при скролле
+    const sections = document.querySelectorAll('.section');
+    const options = {
+      threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, options);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>
