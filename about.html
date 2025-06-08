@@ -11,7 +11,7 @@
       color: #eee;
       margin: 0;
       padding: 0;
-      overflow-x: hidden; /* чтобы боковые анимации не вылазили */
+      overflow-x: hidden;
     }
     header {
       background: #1f1f1f;
@@ -46,6 +46,7 @@
       margin: auto;
       position: relative;
       z-index: 5;
+      min-height: 1200px; /* чтоб скролл был */
     }
     footer {
       text-align: center;
@@ -63,74 +64,21 @@
       box-shadow: 0 0 10px #ff4c4caa;
     }
 
-    /* Боковые изображения */
+    /* Боковые картинки */
     .side-image {
       position: fixed;
       top: 20%;
       width: 120px;
       border-radius: 20px;
       box-shadow: 0 0 15px #ff4c4c88;
-      opacity: 0;
-      animation-fill-mode: forwards;
-      z-index: 2;
+      transition: transform 0.2s ease-out;
+      z-index: 1;
     }
     .side-image.left {
-      left: -140px; /* изначально за экраном слева */
-      animation-name: slideInLeft;
-      animation-duration: 1s;
-      animation-delay: 0.3s;
+      left: 20px;
     }
     .side-image.right {
-      right: -140px; /* изначально за экраном справа */
-      animation-name: slideInRight;
-      animation-duration: 1s;
-      animation-delay: 0.6s;
-    }
-
-    /* Анимации для влета */
-    @keyframes slideInLeft {
-      from {
-        left: -140px;
-        opacity: 0;
-      }
-      to {
-        left: 20px;
-        opacity: 1;
-      }
-    }
-    @keyframes slideInRight {
-      from {
-        right: -140px;
-        opacity: 0;
-      }
-      to {
-        right: 20px;
-        opacity: 1;
-      }
-    }
-
-    /* Анимация при прокрутке (чтобы картинки немного плавно двигались вверх/вниз) */
-    @keyframes floatUpDown {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
-    .side-image {
-      animation-iteration-count: infinite;
-      animation-timing-function: ease-in-out;
-      animation-direction: alternate;
-      animation-duration: 4s;
-    }
-    .side-image.left {
-      animation-name: slideInLeft, floatUpDown;
-      animation-delay: 0.3s, 1.3s;
-      animation-duration: 1s, 4s;
-      animation-iteration-count: 1, infinite;
-    }
-    .side-image.right {
-      animation-name: slideInRight, floatUpDown;
-      animation-delay: 0.6s, 1.6s;
-      animation-duration: 1s, 4s;
-      animation-iteration-count: 1, infinite;
+      right: 20px;
     }
   </style>
 </head>
@@ -149,14 +97,26 @@
     <p>Люблю кодить, учиться новому и создавать крутые проекты. Этот сайт — мой первый шаг к большому портфолио.</p>
     <p>Если хочешь связаться — переходи на страницу «Контакты» или пиши прямо сюда!</p>
 
-    <p style="margin-bottom: 600px;">Листай вниз, братан! Здесь много интересного.</p>
+    <p style="margin-bottom: 800px;">Листай вниз, братан! Здесь много интересного.</p>
   </main>
 
-  <!-- Боковые картинки, меняй на свои -->
   <img src="side1.jpg" alt="Картинка слева" class="side-image left" />
   <img src="side2.jpg" alt="Картинка справа" class="side-image right" />
 
   <footer>© 2025 Бека братан</footer>
+
+  <script>
+    // Параллакс-эффект для боковых картинок при скролле
+    const leftImg = document.querySelector('.side-image.left');
+    const rightImg = document.querySelector('.side-image.right');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      // двигаем картинки вверх, но медленнее, чем основная страница
+      const offset = scrollY * 0.5;
+      leftImg.style.transform = `translateY(-${offset}px)`;
+      rightImg.style.transform = `translateY(-${offset}px)`;
+    });
+  </script>
 </body>
 </html>
-
