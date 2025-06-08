@@ -5,33 +5,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Проекты — Портфолио Беки</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #121212; color: #eee; margin: 0; padding: 0; }
-    header { background: #1f1f1f; padding: 20px; text-align: center; font-size: 2em; font-weight: bold; }
-    nav { background: #272727; padding: 10px; text-align: center; }
-    nav a { color: #a0e7e5; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    nav a:hover { color: #ff4c4c; }
-    main { padding: 20px; max-width: 700px; margin: auto; }
-    footer { text-align: center; padding: 15px; background: #1f1f1f; font-size: 0.9em; color: #888; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #a0e7e5;
+      text-shadow: 0 0 10px #00ffff66;
+    }
+
+    nav {
+      background: #272727;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #a0e7e5;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff4c4c;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    main.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff66;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+    }
+
     .project {
       background: #272727;
       margin-bottom: 20px;
       padding: 15px;
-      border-radius: 8px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00000066;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+    .project:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px #00ffff33;
+    }
+
     .project h2 {
       margin-top: 0;
       color: #ff4c4c;
+      text-shadow: 0 0 5px #ff4c4c66;
     }
+
     .project p {
-      line-height: 1.5em;
+      line-height: 1.6em;
     }
+
     .project a {
       color: #a0e7e5;
       text-decoration: none;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
+
     .project a:hover {
       color: #ff4c4c;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1f1f1f;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -43,7 +116,7 @@
     <a href="projects.html">Проекты</a>
     <a href="contact.html">Контакты</a>
   </nav>
-  <main>
+  <main id="main-content">
     <h1>Мои проекты</h1>
 
     <div class="project">
@@ -63,8 +136,15 @@
       <p>Простой чат-бот, который помогает с ответами и поднимает настроение. Правда, иногда шутит слишком остро.</p>
       <p><a href="https://github.com/bekish-kakish/ai-chatbot" target="_blank">Посмотреть код</a></p>
     </div>
-
   </main>
   <footer>© 2025 Бека братан</footer>
+
+  <script>
+    // Анимация появления контента
+    window.addEventListener('load', () => {
+      document.getElementById('main-content').classList.add('visible');
+    });
+  </script>
 </body>
 </html>
+
