@@ -40,10 +40,11 @@
     }
 
     main {
+      position: relative;
+      min-height: 4000px; /* чтобы хватило места для скролла */
+      padding: 40px 20px;
       max-width: 900px;
       margin: auto;
-      padding: 40px 20px;
-      position: relative;
     }
 
     .profile-photo {
@@ -53,25 +54,12 @@
       border-radius: 100px;
       display: block;
       margin: 0 auto 30px;
+      z-index: 1;
     }
 
     .content {
       position: relative;
-      z-index: 1;
-    }
-
-    .side-image {
-      position: absolute;
-      width: 180px;
-      opacity: 0.5;
-    }
-
-    .side-image.left {
-      left: 0;
-    }
-
-    .side-image.right {
-      right: 0;
+      z-index: 2;
     }
 
     .section {
@@ -83,10 +71,32 @@
       font-size: 1.1em;
     }
 
-    .side-image1 { top: 400px; }
-    .side-image2 { top: 1000px; }
-    .side-image3 { top: 1600px; }
-    .side-image4 { top: 2200px; }
+    .side-image {
+      position: fixed;
+      width: 300px;
+      height: auto;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .side-image.show {
+      opacity: 0.3;
+    }
+
+    .side-image.left {
+      left: 10px;
+    }
+
+    .side-image.right {
+      right: 10px;
+    }
+
+    .side-image-1 { top: 100px; }
+    .side-image-2 { top: 500px; }
+    .side-image-3 { top: 1000px; }
+    .side-image-4 { top: 1500px; }
 
     footer {
       text-align: center;
@@ -110,10 +120,10 @@
     <img src="myphoto.jpg" alt="Фото Беки" class="profile-photo" />
 
     <!-- Боковые изображения -->
-    <img src="https://images.unsplash.com/photo-1589927986089-35812389fcfd?auto=format&fit=crop&w=400&q=80" class="side-image left side-image1" alt="Слева 1">
-    <img src="https://images.unsplash.com/photo-1610563166150-08f9d63ae6aa?auto=format&fit=crop&w=400&q=80" class="side-image right side-image2" alt="Справа 2">
-    <img src="https://images.unsplash.com/photo-1529927066849-94c5b5b48c79?auto=format&fit=crop&w=400&q=80" class="side-image left side-image3" alt="Слева 3">
-    <img src="https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=400&q=80" class="side-image right side-image4" alt="Справа 4">
+    <img src="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=600&q=80" class="side-image left side-image-1" alt="Слева 1">
+    <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=600&q=80" class="side-image right side-image-2" alt="Справа 2">
+    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" class="side-image left side-image-3" alt="Слева 3">
+    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=80" class="side-image right side-image-4" alt="Справа 4">
 
     <!-- Контент -->
     <div class="content">
@@ -137,5 +147,23 @@
   </main>
 
   <footer>© 2025 Бека братан</footer>
+
+  <script>
+    // Плавное появление боковых изображений при прокрутке
+    const sideImages = document.querySelectorAll('.side-image');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+
+      sideImages.forEach((img, index) => {
+        const triggerPoint = 200 + index * 400;
+        if (scrollTop > triggerPoint) {
+          img.classList.add('show');
+        } else {
+          img.classList.remove('show');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
