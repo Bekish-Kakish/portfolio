@@ -6,97 +6,94 @@
   <title>О себе — Портфолио Беки</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #101010;
+      color: #e0e0e0;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
     }
+
     header {
-      background: #1f1f1f;
+      background-color: #1a1a1a;
       padding: 20px;
       text-align: center;
       font-size: 2em;
       font-weight: bold;
-      position: sticky;
-      top: 0;
-      z-index: 10;
     }
+
     nav {
-      background: #272727;
+      background-color: #222;
       padding: 10px;
       text-align: center;
-      position: sticky;
-      top: 60px;
-      z-index: 10;
     }
+
     nav a {
-      color: #a0e7e5;
+      color: #e0e0e0;
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
+
     nav a:hover {
-      color: #ff4c4c;
+      text-decoration: underline;
     }
+
     main {
-      padding: 20px;
-      max-width: 700px;
+      max-width: 900px;
       margin: auto;
+      padding: 40px 20px;
       position: relative;
-      z-index: 5;
-      min-height: 1400px; /* чтоб скролл был */
     }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #1f1f1f;
-      font-size: 0.9em;
-      color: #888;
-      margin-top: 40px;
-    }
-    img.profile-photo {
-      max-width: 200px;
+
+    .profile-photo {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
       border-radius: 100px;
       display: block;
-      margin: 20px auto;
-      box-shadow: 0 0 10px #ff4c4caa;
+      margin: 0 auto 30px;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
     }
 
     .side-image {
-      width: 120px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px #ff4c4c88;
-      margin: 20px 10px;
-      opacity: 0;
-      transition: opacity 1s ease;
-      float: left;
-    }
-    .side-image.right {
-      float: right;
-    }
-    .content-wrapper {
-      overflow: hidden;
-      margin-top: 40px;
-    }
-    .side-image.visible {
-      opacity: 1;
+      position: absolute;
+      width: 180px;
+      opacity: 0.5;
     }
 
-    /* Дополнительный текст, изначально скрыт */
-    #extra-text {
-      opacity: 0;
-      max-height: 0;
-      transition: opacity 1.5s ease, max-height 1.5s ease;
-      color: #ff6b6b;
-      font-weight: bold;
-      margin-top: 40px;
-      line-height: 1.6;
+    .side-image.left {
+      left: 0;
     }
-    #extra-text.visible {
-      opacity: 1;
-      max-height: 500px;
+
+    .side-image.right {
+      right: 0;
+    }
+
+    .section {
+      margin-bottom: 300px;
+    }
+
+    .section p {
+      line-height: 1.8;
+      font-size: 1.1em;
+    }
+
+    .side-image1 { top: 400px; }
+    .side-image2 { top: 1000px; }
+    .side-image3 { top: 1600px; }
+    .side-image4 { top: 2200px; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1a1a1a;
+      font-size: 0.9em;
+      color: #aaa;
     }
   </style>
 </head>
@@ -108,38 +105,37 @@
     <a href="projects.html">Проекты</a>
     <a href="contact.html">Контакты</a>
   </nav>
+
   <main>
-    <h1>О себе</h1>
-    <img src="https://i.pravatar.cc/200" alt="Фото Беки" class="profile-photo" />
-    <div class="content-wrapper">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=120&q=80" alt="Картинка слева" class="side-image left" />
-      <img src="https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=120&q=80" alt="Картинка справа" class="side-image right" />
-      <p>Привет! Я Бека братан, студент AIU, и у меня амбициозные цели. Набираю массу, расту как физически, так и умственно. Этот сайт — мой способ показать, кто я и чем занимаюсь.</p>
-      <p>Обожаю программирование, фитнес и хорошую музыку. Считаю, что важно не останавливаться на достигнутом и всегда двигаться вперёд.</p>
-      <p>Когда прокрутишь вниз, увидишь, как эти картинки появятся — круто, да? 😎</p>
-      <p style="margin-bottom: 800px;">Листай, узнавай, вдохновляйся!</p>
-    </div>
-    <div id="extra-text">
-      <p>Кстати, занимался боксом несколько лет — дисциплина в крови. Недавно сдал ЕНТ на 93 балла, так что мозги тоже в порядке! 💪</p>
-      <p>Я верю, что упорство и желание учиться — вот ключ к успеху. В будущем хочу стать крутым специалистом в IT, создавать проекты, которые меняют мир. А пока прокачиваю тело и ум, не останавливаюсь ни на секунду.</p>
-      <p>Если у тебя тоже есть большие цели — дерзай! Мы все можем больше, чем думаем. Главное — не бояться идти вперёд и не забывать получать кайф от процесса. Жизнь коротка, так что жми на газ! 🚀</p>
+    <img src="myphoto.jpg" alt="Фото Беки" class="profile-photo" />
+
+    <!-- Боковые изображения -->
+    <img src="https://images.unsplash.com/photo-1589927986089-35812389fcfd?auto=format&fit=crop&w=400&q=80" class="side-image left side-image1" alt="Слева 1">
+    <img src="https://images.unsplash.com/photo-1610563166150-08f9d63ae6aa?auto=format&fit=crop&w=400&q=80" class="side-image right side-image2" alt="Справа 2">
+    <img src="https://images.unsplash.com/photo-1529927066849-94c5b5b48c79?auto=format&fit=crop&w=400&q=80" class="side-image left side-image3" alt="Слева 3">
+    <img src="https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=400&q=80" class="side-image right side-image4" alt="Справа 4">
+
+    <!-- Контент -->
+    <div class="content">
+      <section class="section">
+        <h1>О себе</h1>
+        <p>Привет! Я — Бека братан. Учусь в AIU, и каждый день стараюсь становиться сильнее: телом, умом и духом. Моя цель — набрать массу до 82–90 кг, выложиться на максимум в учёбе, и выйти в IT как настоящий профи. 💪</p>
+      </section>
+
+      <section class="section">
+        <p>Я интересуюсь программированием, кибербезопасностью и созданием собственных проектов. Уже сейчас учусь оптимизировать код на C++ и собрал этот сайт с нуля, чтобы показать: я не просто учусь — я двигаюсь вперёд. 🚀</p>
+      </section>
+
+      <section class="section">
+        <p>Кроме учёбы — бокс, тренировки, самодисциплина. Несколько лет занимался профессионально, сейчас это помогает держать характер и выносливость на уровне. Да, и я сдал ЕНТ на 93 балла — не только кулаки, но и мозги на месте! 🧠</p>
+      </section>
+
+      <section class="section">
+        <p>Моя мечта — стать специалистом, которого будут уважать не только за навыки, но и за силу воли. Я хочу вдохновлять других на развитие и доказать, что даже из простых условий можно вырасти в большого человека. Главное — не сдаваться.</p>
+      </section>
     </div>
   </main>
+
   <footer>© 2025 Бека братан</footer>
-
-  <script>
-    window.addEventListener('scroll', () => {
-      const sideImages = document.querySelectorAll('.side-image');
-      const extraText = document.getElementById('extra-text');
-
-      if (window.scrollY > 50) {
-        sideImages.forEach(img => img.classList.add('visible'));
-        extraText.classList.add('visible');
-      } else {
-        sideImages.forEach(img => img.classList.remove('visible'));
-        extraText.classList.remove('visible');
-      }
-    });
-  </script>
 </body>
 </html>
