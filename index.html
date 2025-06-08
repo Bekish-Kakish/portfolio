@@ -5,13 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Главная — Портфолио Бекзата</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #121212; color: #eee; margin: 0; padding: 0; }
-    header { background: #1f1f1f; padding: 20px; text-align: center; font-size: 2em; font-weight: bold; }
-    nav { background: #272727; padding: 10px; text-align: center; }
-    nav a { color: #a0e7e5; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    nav a:hover { color: #ff4c4c; }
-    main { padding: 20px; max-width: 700px; margin: auto; }
-    footer { text-align: center; padding: 15px; background: #1f1f1f; font-size: 0.9em; color: #888; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #1f1f1f;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #a0e7e5;
+      text-shadow: 0 0 10px #00ffff66;
+    }
+
+    nav {
+      background: #272727;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #a0e7e5;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff4c4c;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    main.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff66;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.6em;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1f1f1f;
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
@@ -22,11 +86,18 @@
     <a href="projects.html">Проекты</a>
     <a href="contact.html">Контакты</a>
   </nav>
-  <main>
+  <main id="main-content">
     <h1>Добро пожаловать!</h1>
-    <p>Это главная страница моего портфолио. Заходи, смотри, не стесняйся!</p>
+    <p>Это главная страница моего портфолио. Здесь ты найдешь мои проекты, увлечения и немного души. Заглядывай на вкладки — там интересно 👊</p>
   </main>
-  <footer>© 2025 Бекзат Какимов DS-24Б </footer>
+  <footer>© 2025 Бекзат Какимов DS-24Б</footer>
+
+  <script>
+    // Плавное появление контента
+    window.addEventListener('load', () => {
+      document.getElementById('main-content').classList.add('visible');
+    });
+  </script>
 </body>
 </html>
 
