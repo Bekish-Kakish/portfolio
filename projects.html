@@ -64,24 +64,28 @@
     }
 
     .project {
-      background: #ffffff;
-      color: #000000;
+      background: #272727;
       margin-bottom: 20px;
       padding: 15px;
       border-radius: 10px;
-      box-shadow: 0 0 15px #cccccc;
+      box-shadow: 0 0 15px #00000066;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .project:hover {
       transform: scale(1.02);
-      box-shadow: 0 0 25px #dddddd;
+      box-shadow: 0 0 25px #00ffff33;
     }
 
     .project h2 {
       margin-top: 0;
-      color: #444444;
-      text-shadow: none;
+      color: #ff4c4c;
+      text-shadow: 0 0 5px #ff4c4c66;
+    }
+
+    .project-white-title {
+      color: #ffffff !important;
+      text-shadow: none !important;
     }
 
     .project p {
@@ -89,14 +93,14 @@
     }
 
     .project a {
-      color: #1a73e8;
+      color: #a0e7e5;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s ease;
     }
 
     .project a:hover {
-      color: #0b59d9;
+      color: #ff4c4c;
     }
 
     footer {
@@ -121,19 +125,19 @@
     <h1>Мои проекты</h1>
 
     <div class="project">
-      <h2>1. Сайт портфолио</h2>
+      <h2 class="project-white-title">1. Сайт портфолио</h2>
       <p>Простой и стильный сайт, сделанный на чистом HTML и CSS. Здесь ты сейчас и находишься! 🚀</p>
       <p><a href="https://bekish-kakish.github.io/portfolio/" target="_blank">Посмотреть сайт</a></p>
     </div>
 
     <div class="project">
-      <h2>2. Трекер тренировок</h2>
+      <h2 class="project-white-title">2. Трекер тренировок</h2>
       <p>Приложение для учёта тренировок и прогресса. Помогает не сходить с пути и качаться грамотно.</p>
       <p><a href="https://github.com/bekish-kakish/workout-tracker" target="_blank">В РАЗРАБОТКЕ</a></p>
     </div>
 
     <div class="project">
-      <h2>3. Чат-бот на AI</h2>
+      <h2 class="project-white-title">3. Чат-бот на AI</h2>
       <p>Простой чат-бот, который помогает с ответами и поднимает настроение. Правда, иногда шутит слишком остро.</p>
       <p><a href="project1-code.html" class="code-link">Посмотреть код</a></p>
     </div>
