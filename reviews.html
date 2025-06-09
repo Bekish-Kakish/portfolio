@@ -199,16 +199,11 @@
 
         <label>Оценка:</label>
         <div class="stars">
-          <input type="radio" id="star5" name="rating" value="5" />
-          <label for="star5">★</label>
-          <input type="radio" id="star4" name="rating" value="4" />
-          <label for="star4">★</label>
-          <input type="radio" id="star3" name="rating" value="3" />
-          <label for="star3">★</label>
-          <input type="radio" id="star2" name="rating" value="2" />
-          <label for="star2">★</label>
-          <input type="radio" id="star1" name="rating" value="1" />
-          <label for="star1">★</label>
+          <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
+          <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
+          <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+          <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
+          <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
         </div>
 
         <label for="comment">Комментарий:</label>
@@ -253,7 +248,7 @@
     const form = document.getElementById('reviewForm');
     const reviewsList = document.getElementById('reviewsList');
 
-    form.addEventListener('submit', async e => {
+    form.addEventListener('submit', e => {
       e.preventDefault();
 
       const name = form.name.value.trim();
@@ -265,49 +260,31 @@
         return;
       }
 
-      const data = {
-        name: name,
-        rating: rating,
-        comment: comment
-      };
+      const data = { name, rating, comment };
 
-      try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxiR_KhmSKtbEH6O9YbhyLvGV7zDXI551kiwrDkkLplNu1866TBQvHaV5x05QgiWguPeQ/exec', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+      // Сохраняем отзыв в localStorage
+      const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+      existingReviews.push(data);
+      localStorage.setItem('reviews', JSON.stringify(existingReviews));
 
-        if (response.ok) {
-          alert('Отзыв успешно отправлен!');
+      alert('Отзыв успешно добавлен локально!');
 
-          // Сохраняем отзыв в localStorage
-          const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-          existingReviews.push(data);
-          localStorage.setItem('reviews', JSON.stringify(existingReviews));
-
-          form.reset();
-          autoExpand(form.comment); // сброс высоты textarea
-          tabButtons[1].click(); // переключаемся на вкладку "Посмотреть отзывы"
-          loadReviewsLocal(); // обновляем список отзывов
-        } else {
-          alert('Ошибка при отправке отзыва!');
-        }
-      } catch (err) {
-        alert('Ошибка соединения: ' + err.message);
-      }
+      form.reset();
+      autoExpand(form.comment);
+      tabButtons[1].click(); // переключаемся на вкладку "Посмотреть отзывы"
+      loadReviewsLocal();    // загружаем отзывы из localStorage
     });
 
-    // Загрузка отзывов из localStorage
+    // Загрузка отзывов из localStorage и отображение
     function loadReviewsLocal() {
       const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
       reviewsList.innerHTML = '';
+
       if (reviews.length === 0) {
         reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов.</p>';
         return;
       }
+
       reviews.forEach(({ name, rating, comment }) => {
         const div = document.createElement('div');
         div.className = 'review-item';
@@ -320,8 +297,8 @@
       });
     }
 
-    // Загружаем отзывы из localStorage при загрузке страницы
-    window.addEventListener('load', loadReviewsLocal);
+    // Загружаем отзывы при загрузке страницы
+    loadReviewsLocal();
   </script>
 </body>
 </html>
