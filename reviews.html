@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Отзывы | Bekish-Kakish Portfolio</title>
+  <style>
+    /* Общие стили, адаптированные под ваш сайт */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #ff6f61;
+      margin-bottom: 30px;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    .review-form {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 25px 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 15px rgba(255, 111, 97, 0.3);
+      margin-bottom: 50px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #ff6f61;
+    }
+
+    textarea {
+      width: 100%;
+      resize: vertical;
+      min-height: 80px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background-color: #222;
+      color: #eee;
+      font-size: 1rem;
+      font-family: inherit;
+      margin-bottom: 20px;
+      transition: border-color 0.3s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #ff6f61;
+    }
+
+    .stars {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .stars input[type="radio"] {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 2rem;
+      color: #444;
+      cursor: pointer;
+      transition: color 0.3s;
+      user-select: none;
+    }
+
+    .stars input[type="radio"]:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: #ff6f61;
+    }
+
+    button {
+      background-color: #ff6f61;
+      border: none;
+      color: #fff;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: 600;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #e85b50;
+    }
+
+    .reviews-list {
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .review-item {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 20px 25px;
+      box-shadow: 0 0 10px rgba(255, 111, 97, 0.2);
+      color: #ddd;
+    }
+
+    .review-stars {
+      color: #ff6f61;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .review-text {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    /* Навигация (пример) */
+    nav {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 50px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    nav a {
+      color: #ff6f61;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      transition: border-color 0.3s;
+    }
+    nav a.active,
+    nav a:hover {
+      border-color: #ff6f61;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="#" class="active">Отзывы</a>
+  </nav>
+
+  <h1>Отзывы</h1>
+
+  <form class="review-form" id="reviewForm">
+    <label for="rating">Ваша оценка:</label>
+    <div class="stars" id="starRating">
+      <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 звезд">&#9733;</label>
+      <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 звезды">&#9733;</label>
+      <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 звезды">&#9733;</label>
+      <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 звезды">&#9733;</label>
+      <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 звезда">&#9733;</label>
+    </div>
+
+    <label for="comment">Ваш отзыв:</label>
+    <textarea id="comment" name="comment" placeholder="Напишите ваш отзыв здесь..." required></textarea>
+
+    <button type="submit">Отправить отзыв</button>
+  </form>
+
+  <section class="reviews-list" id="reviewsList">
+    <!-- Здесь будут отзывы -->
+  </section>
+
+  <script>
+    const form = document.getElementById('reviewForm');
+    const reviewsList = document.getElementById('reviewsList');
+
+    // Загрузка отзывов из localStorage
+    function loadReviews() {
+      const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+      reviewsList.innerHTML = '';
+      reviews.forEach(({rating, comment}) => {
+        const reviewElem = document.createElement('div');
+        reviewElem.className = 'review-item';
+        reviewElem.innerHTML = `
+          <div class="review-stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+          <div class="review-text">${escapeHtml(comment)}</div>
+        `;
+        reviewsList.appendChild(reviewElem);
+      });
+    }
+
+    // Экранирование HTML для безопасности
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const rating = parseInt(formData.get('rating'));
+      const comment = formData.get('comment').trim();
+
+      if (!rating) {
+        alert('Пожалуйста, выберите оценку от 1 до 5 звезд.');
+        return;
+      }
+      if (!comment) {
+        alert('Пожалуйста, напишите отзыв.');
+        return;
+      }
+
+      const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+      reviews.unshift({ rating, comment }); // Добавляем новый отзыв в начало
+      localStorage.setItem('reviews', JSON.stringify(reviews));
+
+      form.reset();
+      loadReviews();
+    });
+
+    // Инициализация
+    loadReviews();
+  </script>
+
+</body>
+</html>
