@@ -199,11 +199,16 @@
 
         <label>Оценка:</label>
         <div class="stars">
-          <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
-          <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
-          <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
-          <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
-          <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
+          <input type="radio" id="star5" name="rating" value="5" />
+          <label for="star5">★</label>
+          <input type="radio" id="star4" name="rating" value="4" />
+          <label for="star4">★</label>
+          <input type="radio" id="star3" name="rating" value="3" />
+          <label for="star3">★</label>
+          <input type="radio" id="star2" name="rating" value="2" />
+          <label for="star2">★</label>
+          <input type="radio" id="star1" name="rating" value="1" />
+          <label for="star1">★</label>
         </div>
 
         <label for="comment">Комментарий:</label>
@@ -215,7 +220,6 @@
 
     <div id="view" class="tab-content">
       <section class="reviews-list" id="reviewsList">
-        <!-- Отзывы сюда будут добавляться -->
         <p style="color:#888; text-align:center;">Отзывы загружаются после отправки...</p>
       </section>
     </div>
@@ -278,10 +282,16 @@
 
         if (response.ok) {
           alert('Отзыв успешно отправлен!');
+
+          // Сохраняем отзыв в localStorage
+          const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+          existingReviews.push(data);
+          localStorage.setItem('reviews', JSON.stringify(existingReviews));
+
           form.reset();
           autoExpand(form.comment); // сброс высоты textarea
-          tabButtons[1].click(); // Переключаемся на вкладку "Посмотреть отзывы"
-          loadReviewsLocal(); // Загружаем локальные отзывы (пока нет загрузки с гугл таблиц)
+          tabButtons[1].click(); // переключаемся на вкладку "Посмотреть отзывы"
+          loadReviewsLocal(); // обновляем список отзывов
         } else {
           alert('Ошибка при отправке отзыва!');
         }
@@ -290,8 +300,7 @@
       }
     });
 
-    // Пока отзывы не загружаются с сервера, используем локальное хранение для отображения
-    // Можно убрать, если только на сервере хранить
+    // Загрузка отзывов из localStorage
     function loadReviewsLocal() {
       const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
       reviewsList.innerHTML = '';
@@ -304,4 +313,15 @@
         div.className = 'review-item';
         div.innerHTML = `
           <div class="review-stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-          <div
+          <div class="review-name">${name}</div>
+          <div class="review-text">${comment}</div>
+        `;
+        reviewsList.appendChild(div);
+      });
+    }
+
+    // Загружаем отзывы из localStorage при загрузке страницы
+    window.addEventListener('load', loadReviewsLocal);
+  </script>
+</body>
+</html>
