@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Отзывы — Бекзат Какимов</title>
   <style>
-    html, body {
+     html, body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
@@ -215,13 +215,31 @@
 
     <div id="view" class="tab-content">
       <section class="reviews-list" id="reviewsList">
-        <p style="color:#888; text-align:center;">Отзывы загружаются после отправки...</p>
+        <p style="color:#888; text-align:center;">Отзывы загружаются...</p>
       </section>
     </div>
   </main>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
   <script>
-    // Переключение вкладок
+    // 🔥 Инициализация Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyARTah6meZqkJAyQL5FYrNXlVWtYk_QMaM",
+      authDomain: "bekish-portfolio.firebaseapp.com",
+      projectId: "bekish-portfolio",
+      storageBucket: "bekish-portfolio.firebasestorage.app",
+      messagingSenderId: "192609156605",
+      appId: "1:192609156605:web:0c923246558f58148ead94",
+      measurementId: "G-Q2X3PT2VXB"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // 🔁 Переключение вкладок
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -235,7 +253,7 @@
       });
     });
 
-    // Авторазмер textarea
+    // 🧠 Авторазмер textarea
     const autoExpand = textarea => {
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
@@ -248,7 +266,8 @@
     const form = document.getElementById('reviewForm');
     const reviewsList = document.getElementById('reviewsList');
 
-    form.addEventListener('submit', e => {
+    // 🚀 Отправка отзыва
+    form.addEventListener('submit', async e => {
       e.preventDefault();
 
       const name = form.name.value.trim();
@@ -260,45 +279,56 @@
         return;
       }
 
-      const data = { name, rating, comment };
+      const data = { 
+        name, 
+        rating, 
+        comment, 
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      };
 
-      // Сохраняем отзыв в localStorage
-      const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-      existingReviews.push(data);
-      localStorage.setItem('reviews', JSON.stringify(existingReviews));
-
-      alert('Отзыв успешно добавлен локально!');
-
-      form.reset();
-      autoExpand(form.comment);
-      tabButtons[1].click(); // переключаемся на вкладку "Посмотреть отзывы"
-      loadReviewsLocal();    // загружаем отзывы из localStorage
+      try {
+        await db.collection('reviews').add(data);
+        alert('Отзыв успешно добавлен в базу!');
+        form.reset();
+        autoExpand(form.comment);
+        tabButtons[1].click(); // Переключаемся на "Посмотреть"
+        loadReviews();         // Загружаем свежие отзывы
+      } catch (error) {
+        alert('Ошибка при добавлении отзыва: ' + error.message);
+      }
     });
 
-    // Загрузка отзывов из localStorage и отображение
-    function loadReviewsLocal() {
-      const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
-      reviewsList.innerHTML = '';
+    // 📥 Загрузка отзывов
+    async function loadReviews() {
+      reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Загрузка отзывов...</p>';
 
-      if (reviews.length === 0) {
-        reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов.</p>';
-        return;
+      try {
+        const snapshot = await db.collection('reviews').orderBy('timestamp', 'desc').get();
+        const reviews = snapshot.docs.map(doc => doc.data());
+
+        if (reviews.length === 0) {
+          reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов.</p>';
+          return;
+        }
+
+        reviewsList.innerHTML = '';
+        reviews.forEach(({ name, rating, comment }) => {
+          const div = document.createElement('div');
+          div.className = 'review-item';
+          div.innerHTML = `
+            <div class="review-stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
+            <div class="review-name">${name}</div>
+            <div class="review-text">${comment}</div>
+          `;
+          reviewsList.appendChild(div);
+        });
+      } catch (error) {
+        reviewsList.innerHTML = `<p style="color:red; text-align:center;">Ошибка загрузки отзывов: ${error.message}</p>`;
       }
-
-      reviews.forEach(({ name, rating, comment }) => {
-        const div = document.createElement('div');
-        div.className = 'review-item';
-        div.innerHTML = `
-          <div class="review-stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-          <div class="review-name">${name}</div>
-          <div class="review-text">${comment}</div>
-        `;
-        reviewsList.appendChild(div);
-      });
     }
 
-    // Загружаем отзывы при загрузке страницы
-    loadReviewsLocal();
+    // ⏬ Загрузка при старте
+    loadReviews();
   </script>
 </body>
 </html>
