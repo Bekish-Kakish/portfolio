@@ -304,7 +304,7 @@
 
       try {
         const snapshot = await db.collection('reviews').orderBy('timestamp', 'desc').get();
-        const reviews = snapshot.docs.map(doc => doc.data());
+        const reviews = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
         if (reviews.length === 0) {
           reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов.</p>';
