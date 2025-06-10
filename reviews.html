@@ -314,36 +314,37 @@
         reviewsList.innerHTML = '';
         reviews.forEach(({ id, name, rating, comment }) => {
   const div = document.createElement('div');
-  div.className = 'review-item';
-  div.innerHTML = `
-    <div class="review-text">${comment}</div>
-<button class="delete-btn" data-id="${id}" title="Удалить отзыв" style="
-  background: transparent; 
-  border: none; 
-  color: #888; 
-  font-size: 14px; 
-  cursor: pointer; 
-  padding: 0; 
-  margin-top: 6px;
+div.className = 'review-item';
+div.innerHTML = `
+  <div class="review-text">${comment}</div>
+  <button class="delete-btn" data-id="${id}" title="Удалить отзыв" style="
+    background: transparent; 
+    border: none; 
+    color: #888; 
+    font-size: 14px; 
+    cursor: pointer; 
+    padding: 0; 
+    margin-top: 6px;
   ">
-  🗑️
-</button>
+    🗑️
+  </button>
+`;
 
-
-  const deleteBtn = div.querySelector('.delete-btn');
-  deleteBtn.addEventListener('click', async () => {
-    if (confirm('Удалить этот отзыв?')) {
-      try {
-        await db.collection('reviews').doc(id).delete();
-        alert('Отзыв удалён!');
-        loadReviews(); // обновим список
-      } catch (err) {
-        alert('Ошибка при удалении: ' + err.message);
-      }
+const deleteBtn = div.querySelector('.delete-btn');
+deleteBtn.addEventListener('click', async () => {
+  if (confirm('Удалить этот отзыв?')) {
+    try {
+      await db.collection('reviews').doc(id).delete();
+      alert('Отзыв удалён!');
+      loadReviews(); // обновим список
+    } catch (err) {
+      alert('Ошибка при удалении: ' + err.message);
     }
-  });
+  }
+});
 
-  reviewsList.appendChild(div);
+reviewsList.appendChild(div);
+
 });
 
       } catch (error) {
