@@ -248,224 +248,234 @@
   <script>
     // 🔥 Инициализация Firebase
     const firebaseConfig = {
-      apiKey: "AIzaSyARTah6meZqkJAyQL5FYrNXlVWtYk_QMaM",
-      authDomain: "bekish-portfolio.firebaseapp.com",
-      projectId: "bekish-portfolio",
-      storageBucket: "bekish-portfolio.firebasestorage.app",
-      messagingSenderId: "192609156605",
-      appId: "1:192609156605:web:0c923246558f58148ead94",
-      measurementId: "G-Q2X3PT2VXB"
-    };
+  apiKey: "AIzaSyARTah6meZqkJAyQL5FYrNXlVWtYk_QMaM",
+  authDomain: "bekish-portfolio.firebaseapp.com",
+  projectId: "bekish-portfolio",
+  storageBucket: "bekish-portfolio.firebasestorage.app",
+  messagingSenderId: "192609156605",
+  appId: "1:192609156605:web:0c923246558f58148ead94",
+  measurementId: "G-Q2X3PT2VXB"
+};
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-    // === НАЧАЛО: Авторизация через Google ===
-    const auth = firebase.auth();
-    const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
-    // Создаем кнопку входа и вставляем в main до вкладок
-    const loginBtn = document.createElement('button');
-    loginBtn.textContent = 'Войти через Google';
-    loginBtn.style = `
-      background: #4285F4; 
-      color: white; 
-      border: none; 
-      padding: 10px 15px; 
-      cursor: pointer; 
-      border-radius: 5px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      display: block;
-      max-width: 200px;
-    `;
-    const main = document.querySelector('main');
-    main.insertBefore(loginBtn, document.querySelector('.tabs'));
+const main = document.querySelector('main');
 
-    loginBtn.addEventListener('click', () => {
-      auth.signInWithPopup(provider)
-        .then(result => {
-          const user = result.user;
-          alert(`Привет, ${user.displayName}! Ты вошёл.`);
-          window.currentUserId = user.uid; // сохраняем UID для проверки
-          loginBtn.style.display = 'none'; // скрываем кнопку после входа
-          loadReviews(); // обновляем отзывы, чтобы показать кнопки удаления если надо
-        })
-        .catch(err => {
-          alert('Ошибка входа: ' + err.message);
-        });
-    });
+// Создаем кнопки входа и выхода
+const loginBtn = document.createElement('button');
+loginBtn.textContent = 'Войти через Google';
+Object.assign(loginBtn.style, {
+  background: '#4285F4',
+  color: 'white',
+  border: 'none',
+  padding: '10px 15px',
+  cursor: 'pointer',
+  borderRadius: '5px',
+  fontWeight: 'bold',
+  marginBottom: '20px',
+  display: 'block',
+  maxWidth: '200px',
+});
+main.insertBefore(loginBtn, document.querySelector('.tabs'));
 
-    // === ВЫХОД (добавим кнопку выхода после входа) ===
-    const logoutBtn = document.createElement('button');
-    logoutBtn.textContent = 'Выйти';
-    logoutBtn.style = `
-      background: #666; 
-      color: white; 
-      border: none; 
-      padding: 10px 15px; 
-      cursor: pointer; 
-      border-radius: 5px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      display: none;
-      max-width: 200px;
-    `;
-    main.insertBefore(logoutBtn, document.querySelector('.tabs'));
+const logoutBtn = document.createElement('button');
+logoutBtn.textContent = 'Выйти';
+Object.assign(logoutBtn.style, {
+  background: '#666',
+  color: 'white',
+  border: 'none',
+  padding: '10px 15px',
+  cursor: 'pointer',
+  borderRadius: '5px',
+  fontWeight: 'bold',
+  marginBottom: '20px',
+  display: 'none', // скрываем по умолчанию
+  maxWidth: '200px',
+});
+main.insertBefore(logoutBtn, document.querySelector('.tabs'));
 
-    logoutBtn.addEventListener('click', () => {
-      auth.signOut().then(() => {
-        alert('Ты вышел из аккаунта');
-        window.currentUserId = null;
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
-        loadReviews();
-      });
-    });
+// Функции показа/скрытия кнопок
+function showLogin() {
+  loginBtn.style.display = 'block';
+  logoutBtn.style.display = 'none';
+}
 
-    // Отслеживаем изменение статуса входа
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        window.currentUserId = user.uid;
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block';
-      } else {
-        window.currentUserId = null;
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
-      }
+function showLogout() {
+  loginBtn.style.display = 'none';
+  logoutBtn.style.display = 'block';
+}
+
+// Обработчик входа
+loginBtn.addEventListener('click', () => {
+  auth.signInWithPopup(provider)
+    .then(result => {
+      const user = result.user;
+      alert(`Привет, ${user.displayName}! Ты вошёл.`);
+      window.currentUserId = user.uid;
+      showLogout();
       loadReviews();
+    })
+    .catch(err => {
+      alert('Ошибка входа: ' + err.message);
     });
-    // === КОНЕЦ: Авторизация ===
+});
 
-    // Работа с вкладками
-    const tabs = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+// Обработчик выхода
+logoutBtn.addEventListener('click', () => {
+  auth.signOut().then(() => {
+    alert('Ты вышел из аккаунта');
+    window.currentUserId = null;
+    showLogin();
+    loadReviews();
+  });
+});
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+// Отслеживание изменения статуса авторизации
+auth.onAuthStateChanged(user => {
+  if (user) {
+    console.log('Пользователь вошёл. Его UID:', user.uid);
+    window.currentUserId = user.uid;
+    showLogout();
+    loadReviews();
+  } else {
+    console.log('Пользователь не вошёл');
+    window.currentUserId = null;
+    showLogin();
+    loadReviews();
+  }
+});
 
-        tabContents.forEach(tc => tc.classList.remove('active'));
-        const target = tab.dataset.tab;
-        document.getElementById(target).classList.add('active');
+// Работа с вкладками
+const tabs = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    tabContents.forEach(tc => tc.classList.remove('active'));
+    const target = tab.dataset.tab;
+    document.getElementById(target).classList.add('active');
+  });
+});
+
+// Авторасширение textarea
+const textarea = document.getElementById('comment');
+textarea.addEventListener('input', () => {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+});
+
+// Отправка отзыва
+const reviewForm = document.getElementById('reviewForm');
+reviewForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  if (!window.currentUserId) {
+    alert('Пожалуйста, войди через Google, чтобы оставить отзыв.');
+    return;
+  }
+
+  const name = reviewForm.name.value.trim();
+  const rating = reviewForm.rating.value;
+  const comment = reviewForm.comment.value.trim();
+
+  if (!name || !rating || !comment) {
+    alert('Заполни все поля.');
+    return;
+  }
+
+  try {
+    await db.collection('reviews').add({
+      name,
+      rating: Number(rating),
+      comment,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      userId: window.currentUserId,
+    });
+    alert('Спасибо за отзыв, братан!');
+    reviewForm.reset();
+    textarea.style.height = 'auto';
+    loadReviews();
+  } catch (err) {
+    alert('Ошибка при отправке отзыва: ' + err.message);
+  }
+});
+
+// Загрузка отзывов
+async function loadReviews() {
+  const list = document.getElementById('reviewsList');
+  list.innerHTML = '<p style="color:#888; text-align:center;">Отзывы загружаются...</p>';
+
+  try {
+    const snapshot = await db.collection('reviews').orderBy('timestamp', 'desc').get();
+    if (snapshot.empty) {
+      list.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов, будь первым!</p>';
+      return;
+    }
+
+    list.innerHTML = '';
+    snapshot.forEach(doc => {
+      const data = doc.data();
+
+      let starsHtml = '';
+      for (let i = 1; i <= 5; i++) {
+        starsHtml += i <= data.rating ? '★' : '☆';
+      }
+
+      const reviewEl = document.createElement('div');
+      reviewEl.className = 'review-item';
+
+      const canDelete = window.currentUserId && data.userId && window.currentUserId === data.userId;
+
+      reviewEl.innerHTML = `
+        <div class="review-stars">${starsHtml}</div>
+        <div class="review-name">${escapeHtml(data.name)}</div>
+        <div class="review-text">${escapeHtml(data.comment)}</div>
+        ${canDelete ? `<button class="delete-btn" data-id="${doc.id}">Удалить</button>` : ''}
+      `;
+
+      list.appendChild(reviewEl);
+    });
+
+    // Обработчики удаления
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = e.target.dataset.id;
+        if (!confirm('Ты точно хочешь удалить этот отзыв?')) return;
+
+        try {
+          await db.collection('reviews').doc(id).delete();
+          alert('Отзыв удалён');
+          loadReviews();
+        } catch (err) {
+          alert('Ошибка удаления: ' + err.message);
+        }
       });
     });
 
-    // Авторасширение textarea
-    const textarea = document.getElementById('comment');
-    textarea.addEventListener('input', () => {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    });
+  } catch (err) {
+    list.innerHTML = `<p style="color:#f55; text-align:center;">Ошибка загрузки отзывов: ${err.message}</p>`;
+  }
+}
 
-    // Добавление отзыва в Firestore
-    const reviewForm = document.getElementById('reviewForm');
-    reviewForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+// Экранирование HTML
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
-      if (!window.currentUserId) {
-        alert('Пожалуйста, войди через Google, чтобы оставить отзыв.');
-        return;
-      }
-
-      const name = reviewForm.name.value.trim();
-      const rating = reviewForm.rating.value;
-      const comment = reviewForm.comment.value.trim();
-
-      if (!name || !rating || !comment) {
-        alert('Заполни все поля.');
-        return;
-      }
-
-      try {
-        await db.collection('reviews').add({
-          name,
-          rating: Number(rating),
-          comment,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          userId: window.currentUserId // добавляем ID пользователя, чтобы знать, кто оставил отзыв
-        });
-        alert('Спасибо за отзыв, братан!');
-        reviewForm.reset();
-        textarea.style.height = 'auto';
-        loadReviews();
-      } catch (err) {
-        alert('Ошибка при отправке отзыва: ' + err.message);
-      }
-    });
-
-    // Загрузка отзывов из Firestore
-    async function loadReviews() {
-      const list = document.getElementById('reviewsList');
-      list.innerHTML = '<p style="color:#888; text-align:center;">Отзывы загружаются...</p>';
-      try {
-        const snapshot = await db.collection('reviews').orderBy('timestamp', 'desc').get();
-        if (snapshot.empty) {
-          list.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов, будь первым!</p>';
-          return;
-        }
-
-        list.innerHTML = '';
-        snapshot.forEach(doc => {
-          const data = doc.data();
-
-          // Рисуем звезды
-          let starsHtml = '';
-          for (let i = 1; i <= 5; i++) {
-            starsHtml += i <= data.rating ? '★' : '☆';
-          }
-
-          const reviewEl = document.createElement('div');
-          reviewEl.className = 'review-item';
-
-          // Кнопка удаления появляется ТОЛЬКО если вошедший пользователь - владелец отзыва и UID совпадает
-          const canDelete = window.currentUserId && window.currentUserId === data.userId;
-
-          reviewEl.innerHTML = `
-            <div class="review-stars">${starsHtml}</div>
-            <div class="review-name">${escapeHtml(data.name)}</div>
-            <div class="review-text">${escapeHtml(data.comment)}</div>
-            ${canDelete ? `<button class="delete-btn" data-id="${doc.id}">Удалить</button>` : ''}
-          `;
-
-          list.appendChild(reviewEl);
-        });
-
-        // Добавляем обработчики кнопок удаления
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-          btn.addEventListener('click', async (e) => {
-            const id = e.target.dataset.id;
-            if (!confirm('Ты точно хочешь удалить этот отзыв?')) return;
-
-            try {
-              await db.collection('reviews').doc(id).delete();
-              alert('Отзыв удалён');
-              loadReviews();
-            } catch (err) {
-              alert('Ошибка удаления: ' + err.message);
-            }
-          });
-        });
-
-      } catch (err) {
-        list.innerHTML = `<p style="color:#f55; text-align:center;">Ошибка загрузки отзывов: ${err.message}</p>`;
-      }
-    }
-
-    // Функция экранирования HTML, чтобы избежать XSS
-    function escapeHtml(text) {
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    // Загрузка отзывов сразу после загрузки страницы
-    loadReviews();
+// Изначальная загрузка
+loadReviews();
 
   </script>
 </body>
