@@ -337,12 +337,11 @@ logoutBtn.addEventListener('click', () => {
 // Отслеживание изменения статуса авторизации
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log('Пользователь вошёл. Его UID:', user.uid);
+    console.log('Твой UID:', user.uid);
     window.currentUserId = user.uid;
     showLogout();
     loadReviews();
   } else {
-    console.log('Пользователь не вошёл');
     window.currentUserId = null;
     showLogin();
     loadReviews();
