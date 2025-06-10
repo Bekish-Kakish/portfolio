@@ -158,6 +158,7 @@
     .review-item {
       border-bottom: 1px solid #444;
       padding: 15px 0;
+      position: relative;
     }
     .review-stars {
       color: #ff4c4c;
@@ -174,6 +175,22 @@
       font-size: 1rem;
       line-height: 1.4;
     }
+    .delete-btn {
+      position: absolute;
+      top: 15px;
+      right: 0;
+      background: #ff4c4c;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .delete-btn:hover {
+      background: #e03e3e;
+    }
   </style>
 </head>
 <body>
@@ -187,6 +204,9 @@
   </nav>
 
   <main>
+    <!-- Кнопка входа появится сюда -->
+    <!-- Добавим кнопку программно из JS -->
+
     <div class="tabs">
       <button class="tab-button active" data-tab="write">Написать отзыв</button>
       <button class="tab-button" data-tab="view">Посмотреть отзывы</button>
@@ -222,6 +242,7 @@
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
@@ -239,117 +260,213 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 🔁 Переключение вкладок
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+    // === НАЧАЛО: Авторизация через Google ===
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
 
-    tabButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+    // Создаем кнопку входа и вставляем в main до вкладок
+    const loginBtn = document.createElement('button');
+    loginBtn.textContent = 'Войти через Google';
+    loginBtn.style = `
+      background: #4285F4; 
+      color: white; 
+      border: none; 
+      padding: 10px 15px; 
+      cursor: pointer; 
+      border-radius: 5px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: block;
+      max-width: 200px;
+    `;
+    const main = document.querySelector('main');
+    main.insertBefore(loginBtn, document.querySelector('.tabs'));
 
-        tabContents.forEach(tab => tab.classList.remove('active'));
-        document.getElementById(button.dataset.tab).classList.add('active');
+    loginBtn.addEventListener('click', () => {
+      auth.signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          alert(`Привет, ${user.displayName}! Ты вошёл.`);
+          window.currentUserId = user.uid; // сохраняем UID для проверки
+          loginBtn.style.display = 'none'; // скрываем кнопку после входа
+          loadReviews(); // обновляем отзывы, чтобы показать кнопки удаления если надо
+        })
+        .catch(err => {
+          alert('Ошибка входа: ' + err.message);
+        });
+    });
+
+    // === ВЫХОД (добавим кнопку выхода после входа) ===
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = 'Выйти';
+    logoutBtn.style = `
+      background: #666; 
+      color: white; 
+      border: none; 
+      padding: 10px 15px; 
+      cursor: pointer; 
+      border-radius: 5px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: none;
+      max-width: 200px;
+    `;
+    main.insertBefore(logoutBtn, document.querySelector('.tabs'));
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => {
+        alert('Ты вышел из аккаунта');
+        window.currentUserId = null;
+        loginBtn.style.display = 'block';
+        logoutBtn.style.display = 'none';
+        loadReviews();
       });
     });
 
-    // 🧠 Авторазмер textarea
-    const autoExpand = textarea => {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    };
-    document.querySelectorAll('textarea.auto-expand').forEach(textarea => {
-      textarea.addEventListener('input', () => autoExpand(textarea));
-      autoExpand(textarea);
+    // Отслеживаем изменение статуса входа
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        window.currentUserId = user.uid;
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'block';
+      } else {
+        window.currentUserId = null;
+        loginBtn.style.display = 'block';
+        logoutBtn.style.display = 'none';
+      }
+      loadReviews();
+    });
+    // === КОНЕЦ: Авторизация ===
+
+    // Работа с вкладками
+    const tabs = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        tabContents.forEach(tc => tc.classList.remove('active'));
+        const target = tab.dataset.tab;
+        document.getElementById(target).classList.add('active');
+      });
     });
 
-    const form = document.getElementById('reviewForm');
-    const reviewsList = document.getElementById('reviewsList');
+    // Авторасширение textarea
+    const textarea = document.getElementById('comment');
+    textarea.addEventListener('input', () => {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    });
 
-    // 🚀 Отправка отзыва
-    form.addEventListener('submit', async e => {
+    // Добавление отзыва в Firestore
+    const reviewForm = document.getElementById('reviewForm');
+    reviewForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const name = form.name.value.trim();
-      const rating = parseInt(form.rating.value);
-      const comment = form.comment.value.trim();
-
-      if (!name || !rating || !comment) {
-        alert('Заполните все поля!');
+      if (!window.currentUserId) {
+        alert('Пожалуйста, войди через Google, чтобы оставить отзыв.');
         return;
       }
 
-      const data = { 
-        name, 
-        rating, 
-        comment, 
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      };
+      const name = reviewForm.name.value.trim();
+      const rating = reviewForm.rating.value;
+      const comment = reviewForm.comment.value.trim();
+
+      if (!name || !rating || !comment) {
+        alert('Заполни все поля.');
+        return;
+      }
 
       try {
-        await db.collection('reviews').add(data);
-        alert('Отзыв успешно добавлен в базу!');
-        form.reset();
-        autoExpand(form.comment);
-        tabButtons[1].click(); // Переключаемся на "Посмотреть"
-        loadReviews();         // Загружаем свежие отзывы
-      } catch (error) {
-        alert('Ошибка при добавлении отзыва: ' + error.message);
+        await db.collection('reviews').add({
+          name,
+          rating: Number(rating),
+          comment,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          userId: window.currentUserId // добавляем ID пользователя, чтобы знать, кто оставил отзыв
+        });
+        alert('Спасибо за отзыв, братан!');
+        reviewForm.reset();
+        textarea.style.height = 'auto';
+        loadReviews();
+      } catch (err) {
+        alert('Ошибка при отправке отзыва: ' + err.message);
       }
     });
 
-    // 📥 Загрузка отзывов
+    // Загрузка отзывов из Firestore
     async function loadReviews() {
-      reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Загрузка отзывов...</p>';
-
+      const list = document.getElementById('reviewsList');
+      list.innerHTML = '<p style="color:#888; text-align:center;">Отзывы загружаются...</p>';
       try {
         const snapshot = await db.collection('reviews').orderBy('timestamp', 'desc').get();
-        const reviews = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-        if (reviews.length === 0) {
-          reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов.</p>';
+        if (snapshot.empty) {
+          list.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов, будь первым!</p>';
           return;
         }
 
-        reviewsList.innerHTML = '';
-        reviews.forEach(({ name, rating, comment, timestamp }, index) => {
-  const docId = snapshot.docs[index].id; // id документа в Firestore
-  const div = document.createElement('div');
-  div.className = 'review-item';
-  div.innerHTML = `
-    <div class="review-stars">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</div>
-    <div class="review-name">${name}</div>
-    <div class="review-text">${comment}</div>
-  `;
+        list.innerHTML = '';
+        snapshot.forEach(doc => {
+          const data = doc.data();
 
-  if (window.currentUserId === "ТВОЙ_UID") {
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = 'Удалить';
-    deleteBtn.onclick = async () => {
-      if (confirm('Удалить этот отзыв?')) {
-        try {
-          await db.collection('reviews').doc(docId).delete();
-          alert('Отзыв удалён!');
-          loadReviews(); // обновляем список
-        } catch (e) {
-          alert('Ошибка при удалении: ' + e.message);
-        }
-      }
-    };
-    div.appendChild(deleteBtn);
-  }
+          // Рисуем звезды
+          let starsHtml = '';
+          for (let i = 1; i <= 5; i++) {
+            starsHtml += i <= data.rating ? '★' : '☆';
+          }
 
-  reviewsList.appendChild(div);
-});
+          const reviewEl = document.createElement('div');
+          reviewEl.className = 'review-item';
 
+          // Кнопка удаления появляется ТОЛЬКО если вошедший пользователь - владелец отзыва и UID совпадает
+          const canDelete = window.currentUserId && window.currentUserId === data.userId;
 
-      } catch (error) {
-        reviewsList.innerHTML = `<p style="color:red; text-align:center;">Ошибка загрузки отзывов: ${error.message}</p>`;
+          reviewEl.innerHTML = `
+            <div class="review-stars">${starsHtml}</div>
+            <div class="review-name">${escapeHtml(data.name)}</div>
+            <div class="review-text">${escapeHtml(data.comment)}</div>
+            ${canDelete ? `<button class="delete-btn" data-id="${doc.id}">Удалить</button>` : ''}
+          `;
+
+          list.appendChild(reviewEl);
+        });
+
+        // Добавляем обработчики кнопок удаления
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const id = e.target.dataset.id;
+            if (!confirm('Ты точно хочешь удалить этот отзыв?')) return;
+
+            try {
+              await db.collection('reviews').doc(id).delete();
+              alert('Отзыв удалён');
+              loadReviews();
+            } catch (err) {
+              alert('Ошибка удаления: ' + err.message);
+            }
+          });
+        });
+
+      } catch (err) {
+        list.innerHTML = `<p style="color:#f55; text-align:center;">Ошибка загрузки отзывов: ${err.message}</p>`;
       }
     }
 
-    // ⏬ Загрузка при старте
+    // Функция экранирования HTML, чтобы избежать XSS
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Загрузка отзывов сразу после загрузки страницы
     loadReviews();
+
   </script>
 </body>
 </html>
