@@ -447,6 +447,38 @@
         }[m];
       });
     }
-  </script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw3JbB9T4VVhOozSQKrEC1QfJ_UQs7U16IFqL3B541mDDlYfezGOc9610WsvcCyTfwxUw/exec'; // замени на свой URL
+
+  document.getElementById('feedback-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const rating = document.querySelector('input[name="rating"]:checked')?.value;
+    const comment = document.getElementById('comment').value;
+
+    const data = { name, rating, comment };
+
+    try {
+      const res = await fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await res.json();
+      if (result.result === 'success') {
+        alert('Отзыв успешно сохранен в таблицу! ');
+        document.getElementById('feedback-form').reset();
+      } else {
+        alert('Ошибка при сохранении ');
+      }
+    } catch (err) {
+      console.error('Ошибка сети:', err);
+      alert('Произошла ошибка сети ');
+    }
+  });
+</script>
 </body>
 </html>
