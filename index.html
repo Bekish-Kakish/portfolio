@@ -108,30 +108,31 @@ blockquote {
 
 section.skills {
   margin-top: 45px;
-  background: rgba(15, 26, 26, 0.85); /* Прозрачный фон секции */
+  background: rgba(20, 30, 30, 0.5); /* Ещё прозрачнее фон */
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.05);
-  border: 1px solid #005757;
-  backdrop-filter: blur(2px); /* Лёгкое размытие подложки */
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.04);
+  border: 1px solid rgba(0, 100, 100, 0.2);
+  backdrop-filter: blur(4px); /* мягкий стеклянный эффект */
 }
 
 ul.skills-list li {
-  background: rgba(0, 102, 102, 0.3); /* Прозрачный фон тегов */
-  color: #d0fafa;
+  background: rgba(0, 80, 80, 0.2); /* Тихий холодный зелёно-синий */
+  color: #b0dcdc;
   padding: 8px 14px;
   border-radius: 20px;
   font-weight: 500;
   font-size: 0.95em;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.06);
-  border: 1px solid rgba(0, 255, 255, 0.1);
+  transition: background 0.3s ease, transform 0.3s ease;
+  border: 1px solid rgba(0, 200, 200, 0.1);
+  box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.05);
 }
 
 ul.skills-list li:hover {
-  background-color: rgba(0, 127, 127, 0.5);
-  color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.12);
+  background-color: rgba(0, 110, 110, 0.25); /* чуть темнее при наведении */
+  color: #e0ffff;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.07);
 }
 
 footer {
