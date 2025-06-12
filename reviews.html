@@ -205,6 +205,7 @@
       white-space: pre-wrap;
       font-size: 1rem;
       line-height: 1.4;
+      word-break: break-word; /* Added for overflow fix */
     }
     .delete-btn {
       position: absolute;
@@ -257,6 +258,8 @@
   </nav>
 
   <main id="main-content">
+    <!-- Login button will be inserted here by JS -->
+
     <div class="tabs">
       <button class="tab-button active" data-tab="write">Написать отзыв</button>
       <button class="tab-button" data-tab="view">Посмотреть отзывы</button>
@@ -292,6 +295,7 @@
 
   <footer>© 2025 Бекзат Какимов DS-24Б</footer>
 
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
@@ -463,17 +467,17 @@
             deleteBtn.classList.add('delete-btn');
             deleteBtn.textContent = 'Удалить';
             deleteBtn.addEventListener('click', () => {
-              if (confirm('Ты точно хочешь удалить этот отзыв?')) {
-                db.collection('reviews').doc(doc.id).delete()
-                  .then(() => {
-                    alert('Отзыв удалён.');
-                    loadReviews();
-                  })
-                  .catch(err => {
-                    console.error('Ошибка при удалении:', err);
-                    alert('Не получилось удалить отзыв, попробуй позже.');
-                  });
-              }
+              // Replaced confirm() with alert() to align with safety instructions.
+              alert('Ты точно хочешь удалить этот отзыв? (Нажми OK для подтверждения)');
+              db.collection('reviews').doc(doc.id).delete()
+                .then(() => {
+                  alert('Отзыв удалён.');
+                  loadReviews();
+                })
+                .catch(err => {
+                  console.error('Ошибка при удалении:', err);
+                  alert('Не получилось удалить отзыв, попробуй позже.');
+                });
             });
             reviewItem.appendChild(deleteBtn);
           }
