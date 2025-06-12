@@ -108,36 +108,30 @@ blockquote {
 
 section.skills {
   margin-top: 45px;
-  background: #0f1a1a;
+  background: rgba(15, 26, 26, 0.85); /* Прозрачный фон секции */
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.06);
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.05);
   border: 1px solid #005757;
-}
-
-ul.skills-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  backdrop-filter: blur(2px); /* Лёгкое размытие подложки */
 }
 
 ul.skills-list li {
-  background: #006666;
+  background: rgba(0, 102, 102, 0.3); /* Прозрачный фон тегов */
   color: #d0fafa;
   padding: 8px 14px;
   border-radius: 20px;
   font-weight: 500;
   font-size: 0.95em;
   transition: all 0.3s ease;
-  box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.08);
+  box-shadow: inset 0 0 8px rgba(0, 255, 255, 0.06);
+  border: 1px solid rgba(0, 255, 255, 0.1);
 }
 
 ul.skills-list li:hover {
-  background-color: #007f7f;
+  background-color: rgba(0, 127, 127, 0.5);
   color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.12);
 }
 
 footer {
