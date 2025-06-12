@@ -6,145 +6,143 @@
   <title>О себе — Портфолио Беки</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #0d0d0d, #050505);
-      color: #cceeee;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #e0f0f0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
-    header {
-      background: rgba(20, 30, 30, 0.5);
-      padding: 25px 20px;
-      text-align: center;
-      font-size: 2.5em;
-      font-weight: 900;
-      color: #66f7f1;
-      text-shadow: 0 0 15px #00ffff55;
-      letter-spacing: 2px;
-      border-bottom: 1px solid #33cccc55;
-      backdrop-filter: blur(8px);
-    }
+header {
+  padding: 35px 20px;
+  text-align: center;
+  font-size: 2.4em;
+  font-weight: 800;
+  color: #a0e7e5;
+  letter-spacing: 1.5px;
+  border-bottom: 2px solid #1e8888;
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.05);
+  background: linear-gradient(to right, #1e1e1e, #1a1a1a);
+}
 
-    nav {
-      background: rgba(20, 30, 30, 0.5);
-      padding: 12px 0;
-      text-align: center;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.4);
-      border-bottom: 1px solid #1f8a8a55;
-      backdrop-filter: blur(8px);
-    }
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 15px 0;
+  background: #1a1a1a;
+  border-bottom: 1px solid #2e2e2e;
+  box-shadow: 0 1px 3px rgba(0, 255, 255, 0.08);
+}
 
-    nav a {
-      color: #99f2f2;
-      margin: 0 20px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.05em;
-      transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-      padding: 6px 10px;
-      border-radius: 8px;
-    }
+nav a {
+  color: #a0e7e5;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05em;
+  padding: 6px 10px;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
-    nav a:hover,
-    nav a:focus {
-      color: #ff4c4c;
-      transform: scale(1.05);
-      box-shadow: 0 0 10px #ff4c4c55;
-    }
+nav a:hover,
+nav a:focus {
+  background: #00cccc20;
+  color: #ffffff;
+}
 
-    main {
-      padding: 30px 20px;
-      max-width: 900px;
-      margin: 40px auto 60px;
-    }
+main {
+  padding: 40px 25px;
+  max-width: 900px;
+  margin: 40px auto 60px;
+  background: #1c1c1c;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.07);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  font-size: 1.15em;
+  line-height: 1.8;
+  color: #d0f0f0;
+}
 
-    .profile-photo {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 50%;
-      display: block;
-      margin: 30px auto 50px;
-      box-shadow: 0 0 20px #00ffff88;
-      transition: box-shadow 0.4s ease;
-    }
+main.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .profile-photo:hover {
-      box-shadow: 0 0 30px #00ffffcc;
-    }
+.section {
+  margin-bottom: 60px;
+  background: rgba(20, 30, 30, 0.5);
+  border-radius: 16px;
+  padding: 25px 30px;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.04);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 
-    .section {
-      margin-bottom: 60px;
-      background: rgba(20, 30, 30, 0.5);
-      border-radius: 16px;
-      padding: 25px 30px;
-      box-shadow: 0 0 20px #00ffff22;
-      backdrop-filter: blur(12px);
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+.text-photo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+}
 
-    .text-photo {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 25px;
-    }
+.text-photo:nth-child(even) {
+  flex-direction: row-reverse;
+}
 
-    .text-photo:nth-child(even) {
-      flex-direction: row-reverse;
-    }
+.text-photo img {
+  width: 40%;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #00cccc33;
+  transition: box-shadow 0.3s ease;
+}
 
-    .text-photo img {
-      width: 40%;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #00ffff33;
-      transition: box-shadow 0.3s ease;
-    }
+.text-photo img:hover {
+  box-shadow: 0 0 30px #00cccccc;
+}
 
-    .text-photo img:hover {
-      box-shadow: 0 0 30px #00ffffcc;
-    }
+.text-photo p {
+  width: 60%;
+  line-height: 1.7em;
+  font-size: 1.1em;
+  color: #cceeee;
+}
 
-    .text-photo p {
-      width: 60%;
-      line-height: 1.7em;
-      font-size: 1.1em;
-      color: #d2fefe;
-    }
+@media (max-width: 768px) {
+  .text-photo {
+    flex-direction: column !important;
+  }
 
-    footer {
-      text-align: center;
-      padding: 20px 10px;
-      background: rgba(20, 30, 30, 0.5);
-      font-size: 0.9em;
-      color: #aaa;
-      box-shadow: inset 0 1px 3px rgba(0, 255, 255, 0.1);
-      user-select: none;
-      backdrop-filter: blur(8px);
-    }
+  .text-photo img,
+  .text-photo p {
+    width: 100%;
+  }
 
-    @media (max-width: 768px) {
-      .text-photo {
-        flex-direction: column !important;
-      }
+  .text-photo p {
+    margin-top: 15px;
+  }
+}
 
-      .text-photo img,
-      .text-photo p {
-        width: 100%;
-      }
+footer {
+  text-align: center;
+  padding: 20px 10px;
+  background: #1a1a1a;
+  font-size: 0.9em;
+  color: #888;
+  border-top: 1px solid #2a2a2a;
+}
 
-      .text-photo p {
-        margin-top: 15px;
-      }
     }
   </style>
 </head>
