@@ -1,6 +1,8 @@
-Sure, I'll update the design to be more modern and less "ярких цветов" (garish or brightly colored). I'll aim for a sleek, contemporary feel with a more refined color palette, while maintaining good readability and a clean layout.
+Got it, you want to keep the refined, modern design but make the "View Reviews" section more compact. This is a great idea for better readability, especially if you get many reviews.
 
-Here's the updated code with a refined, modern design:
+To achieve this, I'll reduce the padding and margins within each review item, and slightly adjust font sizes to make them fit more densely without sacrificing legibility.
+
+Here's the updated code:
 
 ```html
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ Here's the updated code with a refined, modern design:
       height: 100%;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-family: 'Segoe UI', -apple-system, BlinkMacMacFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       background-color: #0d0d0d;
       color: #e0e0e0;
       overflow-x: hidden;
@@ -193,14 +195,14 @@ Here's the updated code with a refined, modern design:
     .stars input:checked ~ label,
     .stars label:hover,
     .stars label:hover ~ label {
-      color: #f39c12; /* Softer gold/orange for stars */
+      color: #f39c12;
     }
 
     button {
       margin-top: 25px;
       padding: 10px 20px;
       border: none;
-      background: #5a5a5a; /* Muted primary button color */
+      background: #5a5a5a;
       color: white;
       border-radius: 6px;
       font-weight: 600;
@@ -216,9 +218,10 @@ Here's the updated code with a refined, modern design:
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
+    /* Compact review item styling */
     .review-item {
       border-bottom: 1px solid #333;
-      padding: 18px 0;
+      padding: 12px 0; /* Reduced padding */
       position: relative;
     }
     .review-item:last-child {
@@ -226,31 +229,31 @@ Here's the updated code with a refined, modern design:
     }
     .review-stars {
       color: #f39c12;
-      font-size: 1.1rem;
-      margin-bottom: 6px;
+      font-size: 1rem; /* Slightly reduced font size */
+      margin-bottom: 4px; /* Reduced margin */
     }
     .review-name {
       color: #e0e0e0;
       font-weight: 600;
-      margin-bottom: 6px;
-      font-size: 1em;
+      margin-bottom: 4px; /* Reduced margin */
+      font-size: 0.95em; /* Slightly reduced font size */
     }
     .review-text {
       white-space: pre-wrap;
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 0.9rem; /* Slightly reduced font size */
+      line-height: 1.4; /* Adjusted line height */
       color: #c0c0c0;
     }
     .delete-btn {
       position: absolute;
-      top: 18px;
+      top: 12px; /* Adjusted position */
       right: 0;
-      background: #a04040; /* Muted red for delete */
+      background: #a04040;
       border: none;
-      padding: 6px 12px;
+      padding: 5px 10px; /* Reduced padding */
       cursor: pointer;
       border-radius: 4px;
-      font-size: 0.8rem;
+      font-size: 0.75rem; /* Slightly reduced font size */
       font-weight: 500;
       color: white;
       transition: background-color 0.3s ease, transform 0.2s ease;
@@ -331,7 +334,7 @@ Here's the updated code with a refined, modern design:
 
     <div id="view" class="tab-content">
       <section class="reviews-list" id="reviewsList">
-        <p style="color:#888; text-align:center;">Отзывы загружаются...</p>
+        <p style="color:#888; text-align:center;">Загрузка отзывов...</p>
       </section>
     </div>
   </main>
@@ -364,7 +367,7 @@ Here's the updated code with a refined, modern design:
     let loginBtn = document.createElement('button');
     loginBtn.textContent = 'Войти через Google';
     loginBtn.style.marginBottom = '20px';
-    loginBtn.style.background = '#3f51b5'; /* A more subtle blue for login */
+    loginBtn.style.background = '#3f51b5';
     loginBtn.style.color = 'white';
     loginBtn.style.border = 'none';
     loginBtn.style.padding = '10px 20px';
@@ -404,7 +407,7 @@ Here's the updated code with a refined, modern design:
       currentUser = user;
       if (user) {
         loginBtn.textContent = `Выйти (${user.displayName})`;
-        loginBtn.style.backgroundColor = '#a04040'; /* Muted red for logout */
+        loginBtn.style.backgroundColor = '#a04040';
         loginBtn.onmouseover = () => {
             loginBtn.style.backgroundColor = '#b05050';
             loginBtn.style.transform = 'translateY(-1px)';
@@ -417,7 +420,7 @@ Here's the updated code with a refined, modern design:
         };
       } else {
         loginBtn.textContent = 'Войти через Google';
-        loginBtn.style.backgroundColor = '#3f51b5'; /* Subtle blue for login */
+        loginBtn.style.backgroundColor = '#3f51b5';
         loginBtn.onmouseover = () => {
             loginBtn.style.backgroundColor = '#303f9f';
             loginBtn.style.transform = 'translateY(-1px)';
