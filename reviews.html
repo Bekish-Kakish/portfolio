@@ -334,7 +334,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
-    // 🔥 Инициализация Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyARTah6meZqkJAyQL5FYrNXlVWtYk_QMaM",
       authDomain: "bekish-portfolio.firebaseapp.com",
@@ -353,21 +352,19 @@
 
     const main = document.querySelector('main');
 
-    // Кнопки входа/выхода
     let loginBtn = document.createElement('button');
     loginBtn.textContent = 'Войти через Google';
     loginBtn.style.marginBottom = '20px';
-    loginBtn.style.background = '#00aaff'; /* Adjusted for consistency */
+    loginBtn.style.background = '#00aaff';
     loginBtn.style.color = 'white';
     loginBtn.style.border = 'none';
     loginBtn.style.padding = '10px 20px';
     loginBtn.style.borderRadius = '5px';
     loginBtn.style.cursor = 'pointer';
-    loginBtn.style.display = 'block'; /* Make it a block element */
-    loginBtn.style.margin = '20px auto'; /* Center the button */
+    loginBtn.style.display = 'block';
+    loginBtn.style.margin = '20px auto';
     loginBtn.style.boxShadow = '0 4px 10px rgba(0, 170, 255, 0.4)';
     loginBtn.style.transition = 'background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease';
-
 
     loginBtn.addEventListener('mouseover', () => {
         loginBtn.style.backgroundColor = '#0088cc';
@@ -381,7 +378,6 @@
         loginBtn.style.boxShadow = '0 4px 10px rgba(0, 170, 255, 0.4)';
     });
 
-    // Вставим кнопку входа выше табов
     main.insertBefore(loginBtn, main.firstChild);
 
     let currentUser = null;
@@ -399,7 +395,7 @@
       currentUser = user;
       if (user) {
         loginBtn.textContent = `Выйти (${user.displayName})`;
-        loginBtn.style.backgroundColor = '#cc0000'; /* Red for logout */
+        loginBtn.style.backgroundColor = '#cc0000';
         loginBtn.onmouseover = () => {
             loginBtn.style.backgroundColor = '#a30000';
             loginBtn.style.transform = 'translateY(-2px)';
@@ -412,7 +408,7 @@
         };
       } else {
         loginBtn.textContent = 'Войти через Google';
-        loginBtn.style.backgroundColor = '#00aaff'; /* Blue for login */
+        loginBtn.style.backgroundColor = '#00aaff';
         loginBtn.onmouseover = () => {
             loginBtn.style.backgroundColor = '#0088cc';
             loginBtn.style.transform = 'translateY(-2px)';
@@ -427,7 +423,6 @@
       loadReviews();
     });
 
-    // Табы
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -440,14 +435,12 @@
       });
     });
 
-    // Auto-expand textarea
     const textarea = document.getElementById('comment');
     textarea.addEventListener('input', e => {
       e.target.style.height = 'auto';
       e.target.style.height = e.target.scrollHeight + 'px';
     });
 
-    // Form submission
     document.getElementById('reviewForm').addEventListener('submit', async e => {
       e.preventDefault();
 
@@ -483,11 +476,9 @@
 
         alert('Отзыв добавлен, спасибо! ');
 
-        // Clear form
         e.target.reset();
         textarea.style.height = 'auto';
 
-        // Switch to view reviews and refresh list
         document.querySelector('.tab-button[data-tab="view"]').click();
         loadReviews();
       } catch (error) {
@@ -496,7 +487,6 @@
       }
     });
 
-    // Load and display reviews
     async function loadReviews() {
       const reviewsList = document.getElementById('reviewsList');
       reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Загрузка...</p>';
@@ -511,20 +501,17 @@
           return;
         }
 
-        // UID владельца сайта (админа)
-        const OWNER_UID = 'rUfZljx4XrX7prORLym3H5VQ7Ja2'; // <-- Вставь сюда свой UID из Firebase
+        const OWNER_UID = 'rUfZljx4XrX7prORLym3H5VQ7Ja2';
 
         reviewsList.innerHTML = '';
         snapshot.forEach(doc => {
           const data = doc.data();
 
-          // Check for existence of rating and name
           if (!data.name || !data.rating || !data.comment) return;
 
           const reviewItem = document.createElement('div');
           reviewItem.classList.add('review-item');
 
-          // Stars
           const stars = '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
 
           reviewItem.innerHTML = `
@@ -533,7 +520,6 @@
             <div class="review-text">${escapeHTML(data.comment)}</div>
           `;
 
-          // Delete button if current user is review owner or admin
           if (currentUser && (currentUser.uid === data.uid || currentUser.uid === OWNER_UID)) {
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-btn');
@@ -562,7 +548,6 @@
       }
     }
 
-    // Simple HTML escaping function to prevent XSS
     function escapeHTML(text) {
       return text.replace(/[&<>"']/g, function (m) {
         return {
@@ -575,53 +560,11 @@
       });
     }
 
-    // Add animation for main content on load
     window.addEventListener('load', () => {
       document.getElementById('main-content').classList.add('visible');
     });
 
-    // The Google Sheets script part is not directly integrated with Firebase reviews.
-    // I'm assuming you want to keep it separate or intended to use it for another form.
-    // If you want to use Google Sheets for reviews instead of Firebase,
-    // you'll need to remove the Firebase related code and adapt this section.
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw3JbB9T4VVhOozSQKrEC1QfJ_UQs7U16IFqL3B541mDDlYfezGOc9610WsvcCyTfwxUw/exec'; // replace with your URL
-
-    // This event listener assumes an element with id 'feedback-form' exists.
-    // In your provided code, the form ID is 'reviewForm'.
-    // If you intend to use Google Sheets for the same review form,
-    // you need to change 'feedback-form' to 'reviewForm' here and adjust the data payload.
-    // I'm commenting this out to avoid conflicts with the Firebase submission.
-    document.getElementById('feedback-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const rating = document.querySelector('input[name="rating"]:checked')?.value;
-      const comment = document.getElementById('comment').value;
-
-      const data = { name, rating, comment };
-
-      try {
-        const res = await fetch(scriptURL, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        const result = await res.json();
-        if (result.result === 'success') {
-          alert('Отзыв успешно сохранен в таблицу! ');
-          document.getElementById('feedback-form').reset();
-        } else {
-          alert('Ошибка при сохранении ');
-        }
-      } catch (err) {
-        console.error('Ошибка сети:', err);
-        alert('Произошла ошибка сети ');
-      }
-    });
-    */
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw3JbB9T4VVhOozSQKrEC1QfJ_UQs7U16IFqL3B541mDDlYfezGOc9610WsvcCyTfwxUw/exec';
   </script>
 </body>
 </html>
