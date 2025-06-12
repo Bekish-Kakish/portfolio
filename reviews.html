@@ -1,3 +1,8 @@
+Sure, I'll update the design to be more modern and less "ярких цветов" (garish or brightly colored). I'll aim for a sleek, contemporary feel with a more refined color palette, while maintaining good readability and a clean layout.
+
+Here's the updated code with a refined, modern design:
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -9,9 +14,9 @@
       height: 100%;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #121212;
-      color: #e0f0f0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      background-color: #0d0d0d;
+      color: #e0e0e0;
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
@@ -23,57 +28,57 @@
     }
 
     header {
-      padding: 35px 20px;
+      padding: 30px 20px;
       text-align: center;
-      font-size: 2.4em;
-      font-weight: 800;
-      color: #a0e7e5;
-      letter-spacing: 1.5px;
-      border-bottom: 2px solid #1e8888;
-      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.05);
-      background: linear-gradient(to right, #1e1e1e, #1a1a1a);
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #eceff1;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #2a2a2a;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      background: #1a1a1a;
     }
 
     nav {
       display: flex;
       justify-content: center;
-      gap: 25px;
-      padding: 15px 0;
-      background: #1a1a1a;
+      gap: 20px;
+      padding: 12px 0;
+      background: #1c1c1c;
       border-bottom: 1px solid #2e2e2e;
-      box-shadow: 0 1px 3px rgba(0, 255, 255, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     nav a {
-      color: #a0e7e5;
+      color: #90a4ae;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1.05em;
-      padding: 6px 10px;
-      border-radius: 5px;
+      font-weight: 500;
+      font-size: 1em;
+      padding: 8px 15px;
+      border-radius: 6px;
       transition: background 0.3s ease, color 0.3s ease;
     }
 
     nav a:hover,
     nav a:focus {
-      background: #00cccc20;
+      background: #2a2a2a;
       color: #ffffff;
     }
 
     main {
       flex: 1;
-      max-width: 900px;
+      max-width: 800px;
       margin: 40px auto 60px;
-      padding: 40px 25px;
-      background: #1c1c1c;
-      border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0, 255, 255, 0.07);
+      padding: 35px 30px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      font-size: 1.15em;
-      line-height: 1.8;
-      color: #d0f0f0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      font-size: 1em;
+      line-height: 1.6;
+      color: #c0c0c0;
     }
 
     main.visible {
@@ -82,204 +87,208 @@
     }
 
     h1, h2 {
-      color: #a0e7e5;
-      font-weight: 700;
+      color: #e0e0e0;
+      font-weight: 600;
       margin-bottom: 20px;
-      border-bottom: 2px solid #2abdbd;
-      padding-bottom: 8px;
+      border-bottom: 1px solid #3a3a3a;
+      padding-bottom: 10px;
     }
 
     .tabs {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 15px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #2a2a2a;
+      padding-bottom: 5px;
     }
 
     .tabs button {
-      padding: 12px 25px;
-      font-weight: bold;
+      padding: 10px 20px;
+      font-weight: 600;
       border: none;
       cursor: pointer;
-      background: #2b2b2b;
-      color: #a0e7e5;
-      border-radius: 8px;
-      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-      font-size: 1.05em;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      background: #252525;
+      color: #90a4ae;
+      border-radius: 6px 6px 0 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      font-size: 0.95em;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      top: 1px;
     }
 
     .tabs button:hover {
-      background: #3a3a3a;
-      transform: translateY(-2px);
+      background: #2a2a2a;
+      color: #ffffff;
     }
 
     .tabs button.active {
-      background: #00cccc;
+      background: #333;
       color: white;
-      box-shadow: 0 4px 10px rgba(0, 204, 204, 0.4);
+      box-shadow: none;
+      border-bottom: 2px solid #5a5a5a;
     }
 
-    .tab-content { display: none; }
+    .tab-content { display: none; padding-top: 15px; }
     .tab-content.active { display: block; }
 
     .review-form, .reviews-list {
-      background: #1e1e1e;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.08);
-      border: 1px solid #2a2a2a;
+      background: #222222;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border: 1px solid #333;
     }
 
     label {
       display: block;
-      margin-top: 20px;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #a0e7e5;
-      font-size: 1.05em;
+      margin-top: 18px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #c0c0c0;
+      font-size: 0.95em;
     }
 
     input[type="text"], textarea {
       width: 100%;
-      padding: 12px;
-      background: #2b2b2b;
+      padding: 10px 12px;
+      background: #2c2c2c;
       border: 1px solid #444;
-      color: #eee;
-      border-radius: 8px;
+      color: #e0e0e0;
+      border-radius: 6px;
       font-family: inherit;
       resize: none;
       box-sizing: border-box;
-      font-size: 1rem;
+      font-size: 0.95rem;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     textarea:focus, input:focus {
       outline: none;
-      border-color: #00cccc;
-      box-shadow: 0 0 0 3px rgba(0, 204, 204, 0.3);
+      border-color: #5a5a5a;
+      box-shadow: 0 0 0 2px rgba(90, 90, 90, 0.3);
     }
 
     textarea.auto-expand {
       overflow: hidden;
-      min-height: 80px;
+      min-height: 70px;
     }
 
     .stars {
       display: flex;
       flex-direction: row-reverse;
       justify-content: flex-end;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .stars input { display: none; }
     .stars label {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       color: #444;
       cursor: pointer;
       transition: color 0.3s ease;
-      margin-right: 5px;
+      margin-right: 3px;
     }
     .stars input:checked ~ label,
     .stars label:hover,
     .stars label:hover ~ label {
-      color: #00cccc;
+      color: #f39c12; /* Softer gold/orange for stars */
     }
 
     button {
       margin-top: 25px;
-      padding: 12px 25px;
+      padding: 10px 20px;
       border: none;
-      background: #00cccc;
+      background: #5a5a5a; /* Muted primary button color */
       color: white;
-      border-radius: 8px;
-      font-weight: bold;
+      border-radius: 6px;
+      font-weight: 600;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      font-size: 1.1em;
-      box-shadow: 0 4px 10px rgba(0, 204, 204, 0.4);
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     button:hover {
-      background: #00b3b3;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 204, 204, 0.5);
+      background: #6a6a6a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .review-item {
-      border-bottom: 1px solid #2e2e2e;
-      padding: 20px 0;
+      border-bottom: 1px solid #333;
+      padding: 18px 0;
       position: relative;
     }
     .review-item:last-child {
       border-bottom: none;
     }
     .review-stars {
-      color: #00cccc;
-      font-size: 1.3rem;
-      margin-bottom: 8px;
+      color: #f39c12;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
     }
     .review-name {
-      color: #a0e7e5;
-      font-weight: bold;
-      margin-bottom: 8px;
-      font-size: 1.1em;
+      color: #e0e0e0;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 1em;
     }
     .review-text {
       white-space: pre-wrap;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #cceeee;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #c0c0c0;
     }
     .delete-btn {
       position: absolute;
-      top: 20px;
+      top: 18px;
       right: 0;
-      background: #cc0000;
+      background: #a04040; /* Muted red for delete */
       border: none;
-      padding: 8px 15px;
+      padding: 6px 12px;
       cursor: pointer;
-      border-radius: 5px;
-      font-size: 0.85rem;
-      font-weight: bold;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: white;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
     .delete-btn:hover {
-      background: #a30000;
+      background: #b05050;
       transform: translateY(-1px);
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      background: #1a1a1a;
-      color: #888;
+      padding: 18px;
+      font-size: 0.85em;
+      background: #1c1c1c;
+      color: #777;
       border-top: 1px solid #2a2a2a;
     }
 
     @media (max-width: 600px) {
       nav {
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 10px;
       }
 
       main {
         margin: 30px 15px 50px;
-        padding: 30px 20px;
-        font-size: 1.05em;
+        padding: 25px 20px;
       }
 
       .tabs {
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 10px;
       }
 
       .tabs button {
-        width: 80%;
-        max-width: 300px;
+        width: 90%;
+        max-width: 250px;
       }
     }
   </style>
@@ -355,27 +364,27 @@
     let loginBtn = document.createElement('button');
     loginBtn.textContent = 'Войти через Google';
     loginBtn.style.marginBottom = '20px';
-    loginBtn.style.background = '#00aaff';
+    loginBtn.style.background = '#3f51b5'; /* A more subtle blue for login */
     loginBtn.style.color = 'white';
     loginBtn.style.border = 'none';
     loginBtn.style.padding = '10px 20px';
-    loginBtn.style.borderRadius = '5px';
+    loginBtn.style.borderRadius = '6px';
     loginBtn.style.cursor = 'pointer';
     loginBtn.style.display = 'block';
     loginBtn.style.margin = '20px auto';
-    loginBtn.style.boxShadow = '0 4px 10px rgba(0, 170, 255, 0.4)';
+    loginBtn.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
     loginBtn.style.transition = 'background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease';
 
     loginBtn.addEventListener('mouseover', () => {
-        loginBtn.style.backgroundColor = '#0088cc';
-        loginBtn.style.transform = 'translateY(-2px)';
-        loginBtn.style.boxShadow = '0 6px 12px rgba(0, 170, 255, 0.5)';
+        loginBtn.style.backgroundColor = '#303f9f';
+        loginBtn.style.transform = 'translateY(-1px)';
+        loginBtn.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
     });
 
     loginBtn.addEventListener('mouseout', () => {
-        loginBtn.style.backgroundColor = '#00aaff';
+        loginBtn.style.backgroundColor = '#3f51b5';
         loginBtn.style.transform = 'translateY(0)';
-        loginBtn.style.boxShadow = '0 4px 10px rgba(0, 170, 255, 0.4)';
+        loginBtn.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
     });
 
     main.insertBefore(loginBtn, main.firstChild);
@@ -395,29 +404,29 @@
       currentUser = user;
       if (user) {
         loginBtn.textContent = `Выйти (${user.displayName})`;
-        loginBtn.style.backgroundColor = '#cc0000';
+        loginBtn.style.backgroundColor = '#a04040'; /* Muted red for logout */
         loginBtn.onmouseover = () => {
-            loginBtn.style.backgroundColor = '#a30000';
-            loginBtn.style.transform = 'translateY(-2px)';
-            loginBtn.style.boxShadow = '0 6px 12px rgba(204, 0, 0, 0.5)';
+            loginBtn.style.backgroundColor = '#b05050';
+            loginBtn.style.transform = 'translateY(-1px)';
+            loginBtn.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
         };
         loginBtn.onmouseout = () => {
-            loginBtn.style.backgroundColor = '#cc0000';
+            loginBtn.style.backgroundColor = '#a04040';
             loginBtn.style.transform = 'translateY(0)';
-            loginBtn.style.boxShadow = '0 4px 10px rgba(204, 0, 0, 0.4)';
+            loginBtn.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
         };
       } else {
         loginBtn.textContent = 'Войти через Google';
-        loginBtn.style.backgroundColor = '#00aaff';
+        loginBtn.style.backgroundColor = '#3f51b5'; /* Subtle blue for login */
         loginBtn.onmouseover = () => {
-            loginBtn.style.backgroundColor = '#0088cc';
-            loginBtn.style.transform = 'translateY(-2px)';
-            loginBtn.style.boxShadow = '0 6px 12px rgba(0, 170, 255, 0.5)';
+            loginBtn.style.backgroundColor = '#303f9f';
+            loginBtn.style.transform = 'translateY(-1px)';
+            loginBtn.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
         };
         loginBtn.onmouseout = () => {
-            loginBtn.style.backgroundColor = '#00aaff';
+            loginBtn.style.backgroundColor = '#3f51b5';
             loginBtn.style.transform = 'translateY(0)';
-            loginBtn.style.boxShadow = '0 4px 10px rgba(0, 170, 255, 0.4)';
+            loginBtn.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2)';
         };
       }
       loadReviews();
@@ -445,7 +454,7 @@
       e.preventDefault();
 
       if (!currentUser) {
-        alert('Сначала войдите через Google, братан!');
+        alert('Сначала войдите через Google!');
         return;
       }
 
@@ -461,7 +470,7 @@
       const comment = document.getElementById('comment').value.trim();
 
       if (!name || rating === 0 || !comment) {
-        alert('Заполни все поля, иначе отзыв не пройдет!');
+        alert('Пожалуйста, заполните все поля.');
         return;
       }
 
@@ -474,7 +483,7 @@
           uid: currentUser.uid
         });
 
-        alert('Отзыв добавлен, спасибо! ');
+        alert('Отзыв успешно добавлен!');
 
         e.target.reset();
         textarea.style.height = 'auto';
@@ -483,13 +492,13 @@
         loadReviews();
       } catch (error) {
         console.error('Ошибка добавления отзыва:', error);
-        alert('Что-то пошло не так, попробуй еще раз.');
+        alert('Произошла ошибка при добавлении отзыва. Пожалуйста, попробуйте еще раз.');
       }
     });
 
     async function loadReviews() {
       const reviewsList = document.getElementById('reviewsList');
-      reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Загрузка...</p>';
+      reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Загрузка отзывов...</p>';
 
       try {
         const snapshot = await db.collection('reviews')
@@ -497,7 +506,7 @@
           .get();
 
         if (snapshot.empty) {
-          reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Нет отзывов, будь первым!</p>';
+          reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Пока нет отзывов. Станьте первым, кто оставит отзыв!</p>';
           return;
         }
 
@@ -525,15 +534,15 @@
             deleteBtn.classList.add('delete-btn');
             deleteBtn.textContent = 'Удалить';
             deleteBtn.addEventListener('click', () => {
-              if (confirm('Ты точно хочешь удалить этот отзыв?')) {
+              if (confirm('Вы уверены, что хотите удалить этот отзыв?')) {
                 db.collection('reviews').doc(doc.id).delete()
                   .then(() => {
-                    alert('Отзыв удалён.');
+                    alert('Отзыв успешно удален.');
                     loadReviews();
                   })
                   .catch(err => {
                     console.error('Ошибка при удалении:', err);
-                    alert('Не получилось удалить отзыв, попробуй позже.');
+                    alert('Не удалось удалить отзыв. Пожалуйста, попробуйте позже.');
                   });
               }
             });
@@ -568,3 +577,4 @@
   </script>
 </body>
 </html>
+```
