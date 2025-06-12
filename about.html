@@ -40,7 +40,7 @@
       text-decoration: none;
       font-weight: 700;
       font-size: 1.1em;
-      transition: color 0.3s ease, transform 0.3s ease;
+      transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
       padding: 5px 8px;
       border-radius: 5px;
       display: inline-block;
@@ -51,6 +51,13 @@
       color: #ff4c4c;
       transform: scale(1.1);
       outline: none;
+    }
+
+    /* Активная ссылка с красным свечением */
+    nav a.active {
+      color: #ff4c4c;
+      box-shadow: 0 0 10px 3px #ff4c4c;
+      transform: scale(1.1);
     }
 
     main {
@@ -199,6 +206,20 @@
 
     sections.forEach(section => {
       observer.observe(section);
+    });
+
+    // Подсветка активной ссылки в навигации красным свечением
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = document.querySelectorAll('nav a');
+      const currentPage = window.location.pathname.split('/').pop();
+
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
     });
   </script>
 </body>
