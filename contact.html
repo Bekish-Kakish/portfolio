@@ -5,32 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Контакты — Портфолио Беки</title>
   <style>
+    /* Общие стили */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
+      background-color: #121212;
       color: #e0f0f0;
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
     body {
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      min-height: 100vh;
       align-items: center;
     }
 
+    /* Хедер */
+    header {
+      padding: 35px 20px;
+      text-align: center;
+      font-size: 2.4em;
+      font-weight: 800;
+      color: #a0e7e5;
+      letter-spacing: 1.5px;
+      border-bottom: 2px solid #1e8888;
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.05);
+      background: linear-gradient(to right, #1e1e1e, #1a1a1a);
+      user-select: none;
+      width: 100%;
+      max-width: 1200px;
+      box-sizing: border-box;
+    }
+
+    /* Навигация */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 15px 0;
+      background: #1a1a1a;
+      border-bottom: 1px solid #2e2e2e;
+      box-shadow: 0 1px 3px rgba(0, 255, 255, 0.08);
+      width: 100%;
+      max-width: 1200px;
+      box-sizing: border-box;
+    }
+
+    nav a {
+      color: #a0e7e5;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05em;
+      padding: 6px 10px;
+      border-radius: 5px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: #00cccc20;
+      color: #ffffff;
+      outline: none;
+    }
+
+    /* Основной контейнер */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 900px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Карточка контактов */
     .contact-card {
       background: #181a1b;
       border-radius: 28px;
       box-shadow: 0 0 32px 0 #00ffff15, 0 2px 16px #000a;
       padding: 48px 48px 36px 48px;
-      margin: 60px 0 40px 0;
-      max-width: 420px;
       width: 100%;
       min-width: 320px;
       min-height: 420px;
@@ -52,22 +111,16 @@
       margin-bottom: 10px;
       margin-top: 0;
       letter-spacing: 1px;
-    }
-
-    .contact-divider {
       width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg, #2abdbd 0%, #00cccc 100%);
-      border: none;
-      border-radius: 2px;
-      margin-bottom: 28px;
+      border-bottom: 3px solid #2abdbd;
+      padding-bottom: 10px;
     }
 
     .contact-list {
       width: 100%;
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 30px 0 0 0;
     }
 
     .contact-list li {
@@ -76,7 +129,7 @@
       margin-bottom: 22px;
       font-size: 1.13em;
       color: #e0f0f0;
-      word-break: break-all;
+      word-break: break-word;
     }
 
     .contact-list li:last-child {
@@ -94,6 +147,7 @@
       background: rgba(60, 60, 60, 0.3);
       font-size: 1.2em;
       box-shadow: 0 1px 4px #0003;
+      flex-shrink: 0;
     }
 
     /* Цвета иконок */
@@ -114,60 +168,97 @@
       text-decoration: underline;
     }
 
+    /* Адаптивность */
     @media (max-width: 600px) {
-      .contact-card {
-        max-width: 98vw;
-        padding: 32px 8vw 24px 8vw;
-        min-width: unset;
+      header, nav {
+        max-width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
       }
+
+      main {
+        margin: 30px 10px 50px;
+        padding: 0 10px;
+      }
+
+      .contact-card {
+        padding: 32px 24px 24px 24px;
+        min-height: unset;
+      }
+
       .contact-title {
-        font-size: 1.4em;
+        font-size: 1.6em;
+      }
+
+      .contact-list li {
+        font-size: 1em;
       }
     }
   </style>
 </head>
 <body>
-  <div class="contact-card">
-    <h1 class="contact-title">Контакты</h1>
-    <hr class="contact-divider">
+  <header>Бекзат Какимов — Портфолио</header>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="about.html">О себе</a>
+    <a href="projects.html">Проекты</a>
+    <a href="contact.html">Контакты</a>
+    <a href="reviews.html">Отзывы</a>
+  </nav>
+  <main>
+    <div class="contact-card" role="region" aria-label="Контактная информация">
+      <h1 class="contact-title">Контакты</h1>
+      <ul class="contact-list">
+        <li>
+          <span class="icon icon-mail" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M4 4h16v16H4V4zm8 7l8-5H4l8 5zm0 2l-8-5v10h16V8l-8 5z" fill="currentColor"/>
+            </svg>
+          </span>
+          Email: <a href="mailto:bekzat@gmail.com" class="contact-link" style="margin-left:5px;">bekzat@gmail.com</a>
+        </li>
+        <li>
+          <span class="icon icon-phone" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1v3.5a1 1 0 01-1 1C10.07 22 2 13.93 2 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" fill="currentColor"/>
+            </svg>
+          </span>
+          Телефон: <a href="tel:+77476160508" class="contact-link" style="margin-left:5px;">+7 747 616 05 08</a>
+        </li>
+        <li>
+          <span class="icon icon-instagram" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm6.5.5a1 1 0 11-2 0 1 1 0 012 0z" fill="currentColor"/>
+            </svg>
+          </span>
+          Instagram: <a href="https://www.instagram.com/bekish_kakish?igsh=MXVlYzNlMG81cjltag%3D%3D&utm_source=qr" target="_blank" class="contact-link" style="margin-left:5px;">@bekish_kakish</a>
+        </li>
+        <li>
+          <span class="icon icon-twitter" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.28 4.28 0 001.88-2.37 8.59 8.59 0 01-2.72 1.04A4.27 4.27 0 0016 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.71a4.25 4.25 0 00-.58 2.16c0 1.49.76 2.8 1.92 3.57-.71-.02-1.38-.22-1.97-.54v.05c0 2.08 1.48 3.81 3.44 4.2-.36.1-.75.15-1.15.15-.28 0-.55-.03-.82-.08.56 1.72 2.18 2.97 4.1 3A8.6 8.6 0 012 19.54c-.36 0-.71-.02-1.06-.06A12.18 12.18 0 006.29 21c7.55 0 11.69-6.26 11.69-11.69 0-.18-.01-.36-.02-.54A8.3 8.3 0 0022.46 6z" fill="currentColor"/>
+            </svg>
+          </span>
+          Twitter: <a href="https://twitter.com/bekabrat" target="_blank" class="contact-link" style="margin-left:5px;">@bekabrat</a>
+        </li>
+        <li>
+          <span class="icon icon-telegram" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M22 4L2 12l5.5 2 2 6 3-4 4.5 2z" fill="currentColor"/>
+            </svg>
+          </span>
+          Telegram: <a href="https://t.me/pizdaproebik" target="_blank" class="contact-link" style="margin-left:5px;">@bekish</a>
+        </li>
+      </ul>
+    </div>
+  </main>
+  <footer>© 2025 Бекзат Какимов DS-24Б</footer>
 
-    <ul class="contact-list">
-      <li>
-        <span class="icon icon-mail">
-          <!-- mail SVG -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4V4zm8 7l8-5H4l8 5zm0 2l-8-5v10h16V8l-8 5z" fill="currentColor"/></svg>
-        </span>
-        Email: <a href="mailto:bekzat@gmail.com" class="contact-link" style="margin-left:5px;">bekzat@gmail.com</a>
-      </li>
-      <li>
-        <span class="icon icon-phone">
-          <!-- phone SVG -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1v3.5a1 1 0 01-1 1C10.07 22 2 13.93 2 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" fill="currentColor"/></svg>
-        </span>
-        Телефон: <a href="tel:+77476160508" class="contact-link" style="margin-left:5px;">+7 747 616 05 08</a>
-      </li>
-      <li>
-        <span class="icon icon-instagram">
-          <!-- instagram SVG -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm6.5.5a1 1 0 11-2 0 1 1 0 012 0z" fill="currentColor"/></svg>
-        </span>
-        Instagram: <a href="https://www.instagram.com/bekish_kakish?igsh=MXVlYzNlMG81cjltag%3D%3D&utm_source=qr" target="_blank" class="contact-link" style="margin-left:5px;">@bekish_kakish</a>
-      </li>
-      <li>
-        <span class="icon icon-twitter">
-          <!-- twitter SVG -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.28 4.28 0 001.88-2.37 8.59 8.59 0 01-2.72 1.04A4.27 4.27 0 0016 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.71a4.25 4.25 0 00-.58 2.16c0 1.49.76 2.8 1.92 3.57-.71-.02-1.38-.22-1.97-.54v.05c0 2.08 1.48 3.81 3.44 4.2-.36.1-.75.15-1.15.15-.28 0-.55-.03-.82-.08.56 1.72 2.18 2.97 4.1 3A8.6 8.6 0 012 19.54c-.36 0-.71-.02-1.06-.06A12.18 12.18 0 006.29 21c7.55 0 11.69-6.26 11.69-11.69 0-.18-.01-.36-.02-.54A8.3 8.3 0 0022.46 6z" fill="currentColor"/></svg>
-        </span>
-        Twitter: <a href="https://twitter.com/bekabrat" target="_blank" class="contact-link" style="margin-left:5px;">@bekabrat</a>
-      </li>
-      <li>
-        <span class="icon icon-telegram">
-          <!-- telegram SVG -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M22 4L2 12l5.5 2 2 6 3-4 4.5 2z" fill="currentColor"/></svg>
-        </span>
-        Telegram: <a href="https://t.me/pizdaproebik" target="_blank" class="contact-link" style="margin-left:5px;">@bekish</a>
-      </li>
-    </ul>
-  </div>
+  <script>
+    // Плавное появление контента
+    window.addEventListener('load', () => {
+      document.querySelector('main').classList.add('visible');
+    });
+  </script>
 </body>
 </html>
