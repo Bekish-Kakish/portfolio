@@ -117,6 +117,8 @@
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      width: 100%; /* Ensure equal width */
+      box-sizing: border-box; /* Include padding in the width calculation */
     }
 
     label {
@@ -230,6 +232,44 @@
       background: #e03e3e;
     }
 
+    /* Styles for pagination */
+    .pagination-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid #444;
+    }
+
+    .pagination-controls button {
+      padding: 10px 15px;
+      background: #00aaff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      margin-top: 0; /* Override default button margin-top */
+    }
+
+    .pagination-controls button:hover:not(:disabled) {
+      background: #0088cc;
+    }
+
+    .pagination-controls button:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+
+    .page-indicator {
+      color: #a0e7e5;
+      font-weight: bold;
+      font-size: 1.1em;
+      align-self: center; /* Align text vertically in flex container */
+    }
+
     footer {
       text-align: center;
       padding: 20px;
@@ -296,6 +336,12 @@
       <section class="reviews-list" id="reviewsList">
         <p style="color:#888; text-align:center;">Отзывы загружаются...</p>
       </section>
+      <!-- Pagination Controls -->
+      <div class="pagination-controls">
+        <button id="prevPageBtn" disabled>Предыдущая</button>
+        <span id="pageIndicator" class="page-indicator">Страница 1</span>
+        <button id="nextPageBtn">Следующая</button>
+      </div>
     </div>
   </main>
 
@@ -358,10 +404,13 @@
       } else {
         loginBtn.textContent = 'Войти через Google';
       }
+      // Перезагружаем отзывы при изменении состояния аутентификации, сбрасывая пагинацию
+      currentPage = 0;
+      paginationTokens = [null];
       loadReviews();
     });
 
-    // Табы
+    // Функциональность табов
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -371,10 +420,16 @@
         tabContents.forEach(c => c.classList.remove('active'));
         btn.classList.add('active');
         document.getElementById(btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'view') {
+          // При переключении на вкладку просмотра отзывов, сбрасываем пагинацию и загружаем заново
+          currentPage = 0;
+          paginationTokens = [null];
+          loadReviews();
+        }
       });
     });
 
-    // Авторасширение textarea
+    // Автоматическое расширение textarea
     const textarea = document.getElementById('comment');
     textarea.addEventListener('input', e => {
       e.target.style.height = 'auto';
@@ -386,7 +441,7 @@
       e.preventDefault();
 
       if (!currentUser) {
-        alert('Сначала войдите через Google, братан!');
+        alert('Сначала войдите через Google!');
         return;
       }
 
@@ -402,7 +457,7 @@
       const comment = document.getElementById('comment').value.trim();
 
       if (!name || rating === 0 || !comment) {
-        alert('Заполни все поля, иначе отзыв не пройдет!');
+        alert('Заполните все поля, иначе отзыв не пройдет!');
         return;
       }
 
@@ -415,100 +470,178 @@
           uid: currentUser.uid
         });
 
-        alert('Отзыв добавлен, спасибо! ');
+        alert('Отзыв добавлен, спасибо!');
 
         // Очистка формы
         e.target.reset();
         textarea.style.height = 'auto';
 
-        // Переключиться на просмотр отзывов и обновить список
+        // Переключиться на просмотр отзывов и обновить список с первой страницы
         document.querySelector('.tab-button[data-tab="view"]').click();
-        loadReviews();
       } catch (error) {
         console.error('Ошибка добавления отзыва:', error);
-        alert('Что-то пошло не так, попробуй еще раз.');
+        alert('Что-то пошло не так, попробуйте еще раз.');
       }
     });
 
-    // Загрузка и показ отзывов
+    // Переменные для пагинации
+    const reviewsPerPage = 5; // Количество отзывов на страницу
+    let currentPage = 0; // Текущий индекс страницы (0-индексный)
+    // Массив для хранения маркеров начала каждой страницы. paginationTokens[0] - null (для первой страницы).
+    // paginationTokens[i] - это последний документ страницы (i-1), который используется как startAfter для страницы i.
+    let paginationTokens = [null];
+
+    // Получаем кнопки пагинации и индикатор страницы
+    const prevPageBtn = document.getElementById('prevPageBtn');
+    const nextPageBtn = document.getElementById('nextPageBtn');
+    const pageIndicator = document.getElementById('pageIndicator');
+
+    // Функция для загрузки и отображения отзывов
     async function loadReviews() {
       const reviewsList = document.getElementById('reviewsList');
       reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Загрузка...</p>';
+      prevPageBtn.disabled = true;
+      nextPageBtn.disabled = true;
+
+      let query = db.collection('reviews').orderBy('createdAt', 'desc');
+
+      // Применяем startAfter, если это не первая страница
+      if (currentPage > 0) {
+        query = query.startAfter(paginationTokens[currentPage]);
+      }
+
+      query = query.limit(reviewsPerPage);
 
       try {
-        const snapshot = await db.collection('reviews')
-          .orderBy('createdAt', 'desc')
-          .get();
+        const snapshot = await query.get();
 
         if (snapshot.empty) {
-          reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Нет отзывов, будь первым!</p>';
-          return;
+          // Если текущая страница пуста
+          if (currentPage > 0) {
+            // Если мы не на первой странице, значит, перешли за пределы существующих отзывов
+            // Возвращаемся на предыдущую страницу
+            currentPage--;
+            // Удаляем некорректный токен, если он был добавлен при переходе "в никуда"
+            if (paginationTokens.length > currentPage + 1) {
+              paginationTokens.pop();
+            }
+            loadReviews(); // Повторяем загрузку для корректной предыдущей страницы
+            return;
+          } else {
+            // Если мы на первой странице и она пуста
+            reviewsList.innerHTML = '<p style="color:#888; text-align:center;">Нет отзывов, будь первым!</p>';
+            updatePaginationButtons(snapshot); // Обновляем состояние кнопок
+            return;
+          }
         }
 
-        // UID владельца сайта (админа)
-        const OWNER_UID = 'rUfZljx4XrX7prORLym3H5VQ7Ja2'; // <-- Вставь сюда свой UID из Firebase
+        // Если отзывы есть, отображаем их
+        renderReviews(snapshot, reviewsList);
 
-        reviewsList.innerHTML = '';
-        snapshot.forEach(doc => {
-          const data = doc.data();
+        // Обновляем paginationTokens для следующей страницы
+        // Добавляем токен только если перешли на новую страницу
+        if (paginationTokens.length === currentPage + 1 && snapshot.docs.length === reviewsPerPage) {
+          paginationTokens.push(snapshot.docs[snapshot.docs.length - 1]);
+        }
+        // Если мы возвращались назад и снова переходим вперед,
+        // убедимся, что токен для следующей страницы корректен
+        else if (paginationTokens.length > currentPage + 1) {
+          paginationTokens[currentPage + 1] = snapshot.docs[snapshot.docs.length - 1];
+        }
 
-          // Проверяем существование rating и name
-          if (!data.name || !data.rating || !data.comment) return;
 
-          const reviewItem = document.createElement('div');
-          reviewItem.classList.add('review-item');
+        updatePaginationButtons(snapshot);
 
-          // Форматирование временной метки
-          let timestampText = '';
-          if (data.createdAt && data.createdAt.toDate) { // Check if it's a Firebase Timestamp
-            const date = data.createdAt.toDate();
-            timestampText = date.toLocaleString('ru-RU', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            });
-          }
-
-          // Звездочки
-          const stars = '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
-
-          reviewItem.innerHTML = `
-            <div class="review-stars">${stars}</div>
-            <div class="review-name">${escapeHTML(data.name)}</div>
-            <div class="review-text">${escapeHTML(data.comment)}</div>
-            ${timestampText ? `<div class="review-timestamp">${timestampText}</div>` : ''}
-          `;
-
-          // Кнопка удаления, если текущий пользователь — владелец отзыва или админ
-          if (currentUser && (currentUser.uid === data.uid || currentUser.uid === OWNER_UID)) {
-            const deleteBtn = document.createElement('button');
-            deleteBtn.classList.add('delete-btn');
-            deleteBtn.textContent = 'Удалить';
-            deleteBtn.addEventListener('click', () => {
-              // Replaced confirm() with alert() to align with safety instructions.
-              alert('Ты точно хочешь удалить этот отзыв? (Нажми OK для подтверждения)');
-              db.collection('reviews').doc(doc.id).delete()
-                .then(() => {
-                  alert('Отзыв удалён.');
-                  loadReviews();
-                })
-                .catch(err => {
-                  console.error('Ошибка при удалении:', err);
-                  alert('Не получилось удалить отзыв, попробуй позже.');
-                });
-            });
-            reviewItem.appendChild(deleteBtn);
-          }
-
-          reviewsList.appendChild(reviewItem);
-        });
       } catch (error) {
         console.error('Ошибка загрузки отзывов:', error);
         reviewsList.innerHTML = '<p style="color:#f55; text-align:center;">Ошибка загрузки отзывов.</p>';
+        prevPageBtn.disabled = true;
+        nextPageBtn.disabled = true;
       }
     }
+
+    // Вспомогательная функция для рендеринга отзывов
+    function renderReviews(snapshot, reviewsList) {
+        reviewsList.innerHTML = ''; // Очищаем список
+        const OWNER_UID = 'rUfZljx4XrX7prORLym3H5VQ7Ja2'; // <-- Замените на свой UID Firebase
+
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            if (!data.name || !data.rating || !data.comment) return;
+
+            const reviewItem = document.createElement('div');
+            reviewItem.classList.add('review-item');
+
+            let timestampText = '';
+            if (data.createdAt && data.createdAt.toDate) {
+                const date = data.createdAt.toDate();
+                timestampText = date.toLocaleString('ru-RU', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                });
+            }
+            const stars = '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
+
+            reviewItem.innerHTML = `
+                <div class="review-stars">${stars}</div>
+                <div class="review-name">${escapeHTML(data.name)}</div>
+                <div class="review-text">${escapeHTML(data.comment)}</div>
+                ${timestampText ? `<div class="review-timestamp">${timestampText}</div>` : ''}
+            `;
+
+            if (currentUser && (currentUser.uid === data.uid || currentUser.uid === OWNER_UID)) {
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = 'Удалить';
+                deleteBtn.addEventListener('click', async () => {
+                    alert('Ты точно хочешь удалить этот отзыв? (Нажми OK для подтверждения)');
+                    try {
+                        await db.collection('reviews').doc(doc.id).delete();
+                        alert('Отзыв удалён.');
+                        // После удаления, перезагружаем текущую страницу.
+                        // Если она станет пустой, loadReviews автоматически вернет на предыдущую.
+                        loadReviews();
+                    } catch (err) {
+                        console.error('Ошибка при удалении:', err);
+                        alert('Не получилось удалить отзыв, попробуй позже.');
+                    }
+                });
+                reviewItem.appendChild(deleteBtn);
+            }
+            reviewsList.appendChild(reviewItem);
+        });
+    }
+
+    // Функция для обновления состояния кнопок пагинации
+    async function updatePaginationButtons(currentSnapshot) {
+        prevPageBtn.disabled = (currentPage === 0);
+        pageIndicator.textContent = `Страница ${currentPage + 1}`;
+
+        // Проверяем, есть ли следующая страница
+        const nextQuerySnapshot = await db.collection('reviews')
+            .orderBy('createdAt', 'desc')
+            .startAfter(currentSnapshot.docs[currentSnapshot.docs.length - 1])
+            .limit(1)
+            .get();
+        nextPageBtn.disabled = nextQuerySnapshot.empty;
+    }
+
+    // Обработчики событий для кнопок пагинации
+    prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage--;
+            loadReviews(); // Загружаем отзывы для новой текущей страницы
+        }
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+        currentPage++;
+        loadReviews(); // Загружаем отзывы для новой текущей страницы
+    });
+
 
     // Простая функция экранирования HTML, чтобы не ломать разметку и не допускать XSS
     function escapeHTML(text) {
@@ -523,9 +656,10 @@
       });
     }
 
-    // Initial load for main content animation
+    // Начальная загрузка анимации основного контента и отзывов
     window.addEventListener('load', () => {
       document.getElementById('main-content').classList.add('visible');
+      loadReviews(); // Загружаем начальные отзывы при загрузке страницы
     });
   </script>
 </body>
