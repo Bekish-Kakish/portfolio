@@ -5,57 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Главная — Портфолио Бекзата</title>
   <style>
+    /* Основные стили и цвета с акцентом на оранжевый */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
-      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #2c1b0e 0%, #4a2e0d 100%);
+      color: #f0e6d2;
       overflow-x: hidden;
     }
 
     body {
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
 
     header {
-      background: #1f1f1f;
-      padding: 20px;
+      background: #d35400;
+      padding: 25px 20px;
       text-align: center;
-      font-size: 2em;
-      font-weight: bold;
-      color: #a0e7e5;
-      text-shadow: 0 0 10px #00ffff66;
+      font-size: 2.5em;
+      font-weight: 900;
+      color: #fff3e0;
+      text-shadow: 0 0 15px #ff8c00cc;
+      letter-spacing: 2px;
+      border-bottom: 3px solid #e67e22;
     }
 
     nav {
-      background: #272727;
-      padding: 10px;
+      background: #6e3f0f;
+      padding: 12px 0;
       text-align: center;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+      border-bottom: 2px solid #d35400;
     }
 
     nav a {
-      color: #a0e7e5;
-      margin: 0 15px;
+      color: #ffd699;
+      margin: 0 20px;
       text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
+      font-weight: 700;
+      font-size: 1.1em;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding: 5px 8px;
+      border-radius: 5px;
     }
 
-    nav a:hover {
-      color: #ff4c4c;
+    nav a:hover,
+    nav a:focus {
+      color: #fff3e0;
+      background-color: #e67e22;
+      transform: scale(1.1);
+      outline: none;
     }
 
     main {
       flex: 1;
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
+      padding: 30px 20px;
+      max-width: 900px;
+      margin: 40px auto 60px;
+      background: rgba(255, 140, 0, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(230, 126, 34, 0.4);
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(40px);
       transition: opacity 1s ease, transform 1s ease;
+      line-height: 1.75em;
+      font-size: 1.18em;
     }
 
     main.visible {
@@ -64,23 +82,97 @@
     }
 
     h1 {
-      color: #fff;
-      text-shadow: 0 0 10px #00ffff66;
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
+      color: #ffb84d;
+      text-shadow: 0 0 15px #ff8c00cc;
+      border-bottom: 3px solid #e67e22;
+      padding-bottom: 12px;
+      margin-bottom: 25px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
     }
 
     p {
-      font-size: 1.2em;
-      line-height: 1.6em;
+      margin-bottom: 20px;
+      color: #f9f4e9;
+    }
+
+    /* Добавим стиль для цитаты */
+    blockquote {
+      font-style: italic;
+      color: #ffcc80;
+      border-left: 5px solid #e67e22;
+      margin: 30px 0;
+      padding-left: 15px;
+      background: rgba(230, 126, 34, 0.1);
+      border-radius: 8px;
+      box-shadow: inset 2px 2px 5px rgba(255, 140, 0, 0.2);
+    }
+
+    /* Секция с дополнительной информацией */
+    section.skills {
+      margin-top: 40px;
+      background: rgba(255, 140, 0, 0.15);
+      padding: 20px 25px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(230, 126, 34, 0.3);
+    }
+
+    section.skills h2 {
+      color: #ffb84d;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #e67e22;
+      padding-bottom: 8px;
+      font-weight: 700;
+    }
+
+    ul.skills-list {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    ul.skills-list li {
+      background: #e67e22;
+      color: #fff3e0;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(255, 140, 0, 0.5);
+      transition: background-color 0.3s ease;
+      cursor: default;
+    }
+
+    ul.skills-list li:hover {
+      background-color: #ff8c00;
     }
 
     footer {
       text-align: center;
-      padding: 15px;
-      background: #1f1f1f;
-      font-size: 0.9em;
-      color: #888;
+      padding: 20px 10px;
+      background: #6e3f0f;
+      font-size: 0.95em;
+      color: #d9b382;
+      box-shadow: inset 0 1px 3px rgba(255, 140, 0, 0.3);
+      user-select: none;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 600px) {
+      nav a {
+        margin: 0 10px;
+        font-size: 1em;
+      }
+
+      main {
+        margin: 30px 15px 50px;
+        font-size: 1.05em;
+      }
+
+      ul.skills-list {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -91,11 +183,34 @@
     <a href="about.html">О себе</a>
     <a href="projects.html">Проекты</a>
     <a href="contact.html">Контакты</a>
-    <a href="reviews.html">Отзывы</a> <!-- Добавленная ссылка -->
+    <a href="reviews.html">Отзывы</a>
   </nav>
   <main id="main-content">
     <h1>Добро пожаловать!</h1>
-    <p>Это главная страница моего портфолио. Здесь ты найдешь мои проекты, увлечения и немного души. Заглядывай на вкладки — там интересно </p>
+    <p>Рад видеть тебя на моей главной странице портфолио! Здесь я собрал лучшие проекты, которыми горжусь, а также делюсь своими увлечениями и мыслями.</p>
+    <p>Мое имя — Бекзат Какимов, и я увлечен созданием современных, удобных и красивых цифровых решений. Я верю, что дизайн и функциональность должны идти рука об руку, чтобы создавать по-настоящему впечатляющие продукты.</p>
+    <blockquote>«Творчество — это не просто работа, это способ видеть мир с другой стороны и вдохновлять других.»</blockquote>
+    <p>На сайте ты найдешь:</p>
+    <ul>
+      <li>Информацию обо мне и моем опыте</li>
+      <li>Подробные описания проектов с демонстрациями</li>
+      <li>Отзывы клиентов и коллег</li>
+      <li>Контактные данные для сотрудничества</li>
+    </ul>
+    <section class="skills">
+      <h2>Мои ключевые навыки</h2>
+      <ul class="skills-list">
+        <li>HTML5 & CSS3</li>
+        <li>JavaScript (ES6+)</li>
+        <li>React & Vue</li>
+        <li>Node.js & Express</li>
+        <li>UI/UX дизайн</li>
+        <li>Git & GitHub</li>
+        <li>Адаптивная верстка</li>
+        <li>Оптимизация производительности</li>
+      </ul>
+    </section>
+    <p>Не стесняйся изучать вкладки сайта — там много интересного, и я всегда рад новым знакомствам и предложениям!</p>
   </main>
   <footer>© 2025 Бекзат Какимов DS-24Б</footer>
 
