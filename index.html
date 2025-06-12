@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Главная — Портфолио Бекзата</title>
   <style>
-    /* Основные стили и цвета с акцентом на оранжевый */
+    /* Возвращаем изначальную тёмную цветовую палитру с бирюзовыми акцентами */
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #2c1b0e 0%, #4a2e0d 100%);
-      color: #f0e6d2;
+      background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
+      color: #eee;
       overflow-x: hidden;
     }
 
@@ -23,27 +23,27 @@
     }
 
     header {
-      background: #d35400;
+      background: #1f1f1f;
       padding: 25px 20px;
       text-align: center;
       font-size: 2.5em;
       font-weight: 900;
-      color: #fff3e0;
-      text-shadow: 0 0 15px #ff8c00cc;
+      color: #a0e7e5;
+      text-shadow: 0 0 15px #00ffff66;
       letter-spacing: 2px;
-      border-bottom: 3px solid #e67e22;
+      border-bottom: 3px solid #33cccc;
     }
 
     nav {
-      background: #6e3f0f;
+      background: #272727;
       padding: 12px 0;
       text-align: center;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
-      border-bottom: 2px solid #d35400;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.5);
+      border-bottom: 2px solid #1f8a8a;
     }
 
     nav a {
-      color: #ffd699;
+      color: #a0e7e5;
       margin: 0 20px;
       text-decoration: none;
       font-weight: 700;
@@ -55,8 +55,7 @@
 
     nav a:hover,
     nav a:focus {
-      color: #fff3e0;
-      background-color: #e67e22;
+      color: #ff4c4c;
       transform: scale(1.1);
       outline: none;
     }
@@ -66,14 +65,15 @@
       padding: 30px 20px;
       max-width: 900px;
       margin: 40px auto 60px;
-      background: rgba(255, 140, 0, 0.1);
+      background: rgba(10, 40, 40, 0.3);
       border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(230, 126, 34, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 255, 255, 0.2);
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 1s ease, transform 1s ease;
       line-height: 1.75em;
       font-size: 1.18em;
+      color: #d0f0f0;
     }
 
     main.visible {
@@ -82,9 +82,9 @@
     }
 
     h1 {
-      color: #ffb84d;
-      text-shadow: 0 0 15px #ff8c00cc;
-      border-bottom: 3px solid #e67e22;
+      color: #a0e7e5;
+      text-shadow: 0 0 15px #00ffff66;
+      border-bottom: 3px solid #33cccc;
       padding-bottom: 12px;
       margin-bottom: 25px;
       font-weight: 900;
@@ -93,34 +93,33 @@
 
     p {
       margin-bottom: 20px;
-      color: #f9f4e9;
+      color: #cceeee;
     }
 
-    /* Добавим стиль для цитаты */
     blockquote {
       font-style: italic;
-      color: #ffcc80;
-      border-left: 5px solid #e67e22;
+      color: #7fffd4;
+      border-left: 5px solid #00cccc;
       margin: 30px 0;
       padding-left: 15px;
-      background: rgba(230, 126, 34, 0.1);
+      background: rgba(0, 255, 255, 0.1);
       border-radius: 8px;
-      box-shadow: inset 2px 2px 5px rgba(255, 140, 0, 0.2);
+      box-shadow: inset 2px 2px 5px rgba(0, 255, 255, 0.15);
     }
 
-    /* Секция с дополнительной информацией */
     section.skills {
       margin-top: 40px;
-      background: rgba(255, 140, 0, 0.15);
+      background: rgba(0, 255, 255, 0.1);
       padding: 20px 25px;
       border-radius: 15px;
-      box-shadow: 0 6px 15px rgba(230, 126, 34, 0.3);
+      box-shadow: 0 6px 15px rgba(0, 255, 255, 0.15);
+      color: #b0ffff;
     }
 
     section.skills h2 {
-      color: #ffb84d;
+      color: #a0e7e5;
       margin-bottom: 15px;
-      border-bottom: 2px solid #e67e22;
+      border-bottom: 2px solid #33cccc;
       padding-bottom: 8px;
       font-weight: 700;
     }
@@ -134,27 +133,28 @@
     }
 
     ul.skills-list li {
-      background: #e67e22;
-      color: #fff3e0;
+      background: #33cccc;
+      color: #003333;
       padding: 8px 14px;
       border-radius: 20px;
       font-weight: 600;
-      box-shadow: 0 2px 6px rgba(255, 140, 0, 0.5);
+      box-shadow: 0 2px 6px rgba(0, 255, 255, 0.5);
       transition: background-color 0.3s ease;
       cursor: default;
     }
 
     ul.skills-list li:hover {
-      background-color: #ff8c00;
+      background-color: #00ffff;
+      color: #004d4d;
     }
 
     footer {
       text-align: center;
       padding: 20px 10px;
-      background: #6e3f0f;
+      background: #1f1f1f;
       font-size: 0.95em;
-      color: #d9b382;
-      box-shadow: inset 0 1px 3px rgba(255, 140, 0, 0.3);
+      color: #888;
+      box-shadow: inset 0 1px 3px rgba(0, 255, 255, 0.1);
       user-select: none;
     }
 
