@@ -87,34 +87,16 @@
       transform: translateY(0);
     }
 
-    h1, h2 {
-      color: #a0e7e5;
-      font-weight: 700;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #2abdbd;
-      padding-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* Иконки рядом с заголовками проектов */
-    .icon-wrapper {
-      background-color: rgba(85, 85, 85, 0.6); /* серый фон с прозрачностью */
-      padding: 8px;
+    /* Заголовки проектов с серым фоном */
+    .project h2 {
+      background-color: rgba(85, 85, 85, 0.6); /* полупрозрачный серый фон */
+      display: inline-block; /* фон только под текстом */
+      padding: 6px 14px;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-    }
-
-    .icon-wrapper svg {
-      fill: #a0e7e5;
-      width: 20px;
-      height: 20px;
+      color: #a0e7e5;
+      margin-top: 0;
+      margin-bottom: 12px;
+      border-bottom: none; /* убрать нижнюю границу, чтобы не конфликтовала с фоном */
     }
 
     /* Проекты */
@@ -171,10 +153,6 @@
         flex-wrap: wrap;
         gap: 15px;
       }
-
-      h1, h2 {
-        justify-content: flex-start;
-      }
     }
   </style>
 </head>
@@ -191,43 +169,19 @@
     <h1>Мои проекты</h1>
 
     <div class="project">
-      <h2>
-        <span class="icon-wrapper" aria-hidden="true">
-          <!-- Иконка портфолио (пример) -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <path d="M4 4h16v2H4zM4 8h16v2H4zM4 12h16v6H4z"/>
-          </svg>
-        </span>
-        1. Сайт портфолио
-      </h2>
+      <h2>1. Сайт портфолио</h2>
       <p>Простой и стильный сайт, сделанный на чистом HTML и CSS. Здесь ты сейчас и находишься! 🚀</p>
       <p><a href="https://bekish-kakish.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Посмотреть сайт</a></p>
     </div>
 
     <div class="project">
-      <h2>
-        <span class="icon-wrapper" aria-hidden="true">
-          <!-- Иконка трекера (пример) -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <path d="M7 2v2H3v18h18v-4h2v6H1V2zM17 7h-2v7h2zm-4 3h-2v4h2z"/>
-          </svg>
-        </span>
-        2. Трекер тренировок
-      </h2>
+      <h2>2. Трекер тренировок</h2>
       <p>Приложение для учёта тренировок и прогресса. Помогает не сходить с пути и качаться грамотно.</p>
       <p><a href="https://github.com/bekish-kakish/workout-tracker" target="_blank" rel="noopener noreferrer">В РАЗРАБОТКЕ</a></p>
     </div>
 
     <div class="project">
-      <h2>
-        <span class="icon-wrapper" aria-hidden="true">
-          <!-- Иконка чат-бота (пример) -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <path d="M2 2h20v16H6l-4 4z"/>
-          </svg>
-        </span>
-        3. Чат-бот на AI
-      </h2>
+      <h2>3. Чат-бот на AI</h2>
       <p>Простой чат-бот, который помогает с ответами и поднимает настроение. Правда, иногда шутит слишком остро.</p>
       <p><a href="project1-code.html" class="code-link">Посмотреть код</a></p>
     </div>
