@@ -31,8 +31,8 @@
       font-weight: 800;
       color: #a0e7e5;
       letter-spacing: 1.5px;
-      border-bottom: 2px solid #30d5c8; /* бирюзовая граница */
-      box-shadow: 0 4px 15px rgba(48, 213, 200, 0.05);
+      border-bottom: 2px solid #1e8888;
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.05);
       background: linear-gradient(to right, #1e1e1e, #1a1a1a);
       user-select: none;
     }
@@ -45,7 +45,7 @@
       padding: 15px 0;
       background: #1a1a1a;
       border-bottom: 1px solid #2e2e2e;
-      box-shadow: 0 1px 3px rgba(48, 213, 200, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 255, 255, 0.08);
     }
 
     nav a {
@@ -60,23 +60,23 @@
 
     nav a:hover,
     nav a:focus {
-      background: #30d5c820; /* прозрачный бирюзовый фон */
-      color: #30d5c8;
+      background: #00cccc20;
+      color: #ffffff;
       outline: none;
     }
 
     /* Основной контент */
     main {
       flex: 1;
-      max-width: 700px;
+      max-width: 900px;
       margin: 40px auto 60px;
       padding: 40px 25px;
       background: #1c1c1c;
       border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(48, 213, 200, 0.07);
+      box-shadow: 0 8px 25px rgba(0, 255, 255, 0.07);
       opacity: 0;
       transform: translateY(40px);
-      transition: opacity 1s ease, transform 1s ease;
+      transition: opacity 0.8s ease, transform 0.8s ease;
       font-size: 1.15em;
       line-height: 1.8;
       color: #d0f0f0;
@@ -87,43 +87,38 @@
       transform: translateY(0);
     }
 
-    h1 {
-      color: #30d5c8;
-      text-shadow: 0 0 10px #30d5c866;
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
-      margin-top: 0;
+    h1, h2 {
+      color: #a0e7e5;
+      font-weight: 700;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #2abdbd;
+      padding-bottom: 8px;
     }
 
     /* Проекты */
     .project {
-      background: #272727;
+      background: rgba(0, 80, 80, 0.2);
       margin-bottom: 20px;
       padding: 15px;
       border-radius: 10px;
-      box-shadow: 0 0 15px #00000066;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.05);
+      transition: background 0.3s ease;
     }
 
     .project:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 25px #30d5c833;
+      background-color: rgba(0, 110, 110, 0.25);
     }
 
     .project h2 {
       margin-top: 0;
-      color: #30d5c8;
-      text-shadow: 0 0 5px #30d5c866;
-    }
-
-    .project-white-title {
-      color: #ffffff !important;
-      text-shadow: none !important;
+      color: #a0e7e5;
+      text-shadow: none;
     }
 
     .project p {
       line-height: 1.6em;
       margin: 8px 0;
+      color: #cceeee;
     }
 
     .project a {
@@ -134,7 +129,7 @@
     }
 
     .project a:hover {
-      color: #30d5c8;
+      color: #00cccc;
     }
 
     /* Футер */
@@ -176,19 +171,19 @@
     <h1>Мои проекты</h1>
 
     <div class="project">
-      <h2 class="project-white-title">1. Сайт портфолио</h2>
+      <h2>1. Сайт портфолио</h2>
       <p>Простой и стильный сайт, сделанный на чистом HTML и CSS. Здесь ты сейчас и находишься! 🚀</p>
       <p><a href="https://bekish-kakish.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Посмотреть сайт</a></p>
     </div>
 
     <div class="project">
-      <h2 class="project-white-title">2. Трекер тренировок</h2>
+      <h2>2. Трекер тренировок</h2>
       <p>Приложение для учёта тренировок и прогресса. Помогает не сходить с пути и качаться грамотно.</p>
       <p><a href="https://github.com/bekish-kakish/workout-tracker" target="_blank" rel="noopener noreferrer">В РАЗРАБОТКЕ</a></p>
     </div>
 
     <div class="project">
-      <h2 class="project-white-title">3. Чат-бот на AI</h2>
+      <h2>3. Чат-бот на AI</h2>
       <p>Простой чат-бот, который помогает с ответами и поднимает настроение. Правда, иногда шутит слишком остро.</p>
       <p><a href="project1-code.html" class="code-link">Посмотреть код</a></p>
     </div>
