@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Контакты — Портфолио Беки</title>
+  <title>Проекты — Портфолио Беки</title>
   <style>
     /* Общие стили */
     html, body {
@@ -21,7 +21,6 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      align-items: center;
     }
 
     /* Хедер */
@@ -36,9 +35,6 @@
       box-shadow: 0 4px 15px rgba(0, 255, 255, 0.05);
       background: linear-gradient(to right, #1e1e1e, #1a1a1a);
       user-select: none;
-      width: 100%;
-      max-width: 1200px;
-      box-sizing: border-box;
     }
 
     /* Навигация */
@@ -50,9 +46,6 @@
       background: #1a1a1a;
       border-bottom: 1px solid #2e2e2e;
       box-shadow: 0 1px 3px rgba(0, 255, 255, 0.08);
-      width: 100%;
-      max-width: 1200px;
-      box-sizing: border-box;
     }
 
     nav a {
@@ -72,126 +65,121 @@
       outline: none;
     }
 
-    /* Основной контейнер */
+    /* Основной контент */
     main {
       flex: 1;
-      width: 100%;
       max-width: 900px;
       margin: 40px auto 60px;
-      padding: 0 20px;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Карточка контактов */
-    .contact-card {
-      background: #181a1b;
-      border-radius: 28px;
-      box-shadow: 0 0 32px 0 #00ffff15, 0 2px 16px #000a;
-      padding: 48px 48px 36px 48px;
-      width: 100%;
-      min-width: 320px;
-      min-height: 420px;
+      padding: 40px 25px;
+      background: #1c1c1c;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0, 255, 255, 0.07);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      font-size: 1.15em;
+      line-height: 1.8;
+      color: #d0f0f0;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      position: relative;
-      transition: box-shadow 0.3s;
+      align-items: center;
     }
 
-    .contact-card:hover {
-      box-shadow: 0 0 48px 0 #00ffff33, 0 4px 24px #000c;
+    main.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .contact-title {
-      font-size: 2.2em;
-      font-weight: 800;
+    /* Заголовки проектов */
+    .project h2 {
       color: #a0e7e5;
-      margin-bottom: 10px;
       margin-top: 0;
-      letter-spacing: 1px;
-      width: 100%;
-      border-bottom: 3px solid #2abdbd;
-      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #2abdbd;
+      padding-bottom: 8px;
     }
 
-    .contact-list {
+    /* Карточки проектов с более тёмным серым фоном */
+    .project {
+      background: rgba(40, 40, 40, 0.95);
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
       width: 100%;
-      list-style: none;
-      padding: 0;
-      margin: 30px 0 0 0;
+      max-width: 800px;
     }
 
-    .contact-list li {
+    .project:hover {
+      background-color: rgba(55, 55, 55, 1);
+    }
+
+    .project p {
+      line-height: 1.6em;
+      margin: 8px 0;
+      color: #cceeee;
+    }
+
+    .project a {
+      color: #a0e7e5;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .project a:hover {
+      color: #00cccc;
+    }
+
+    /* Блок иконок соцсетей */
+    .social-icons {
+      margin-top: 40px;
       display: flex;
-      align-items: center;
-      margin-bottom: 22px;
-      font-size: 1.13em;
-      color: #e0f0f0;
-      word-break: break-word;
-    }
-
-    .contact-list li:last-child {
-      margin-bottom: 0;
-    }
-
-    .icon {
-      display: inline-flex;
-      align-items: center;
+      gap: 24px;
       justify-content: center;
+      width: 100%;
+      max-width: 400px;
+    }
+    .social-link svg {
       width: 32px;
       height: 32px;
-      margin-right: 15px;
-      border-radius: 8px;
-      background: rgba(60, 60, 60, 0.3);
-      font-size: 1.2em;
-      box-shadow: 0 1px 4px #0003;
-      flex-shrink: 0;
+      fill: #00cccc;
+      transition: fill 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+    .social-link:hover svg {
+      fill: #ffffff;
+      transform: scale(1.2);
     }
 
-    /* Цвета иконок */
-    .icon-mail { color: #00bcd4; }
-    .icon-phone { color: #7c4dff; }
-    .icon-instagram { color: #c97b45; }
-    .icon-twitter { color: #ff4c4c; }
-    .icon-telegram { color: #e0e0e0; }
-
-    .contact-link {
-      color: #45e6e6;
-      text-decoration: none;
-      font-weight: 700;
-      transition: color 0.2s;
-    }
-    .contact-link:hover {
-      color: #00cccc;
-      text-decoration: underline;
+    /* Футер */
+    footer {
+      text-align: center;
+      padding: 20px 10px;
+      background: #1a1a1a;
+      font-size: 0.9em;
+      color: #888;
+      border-top: 1px solid #2a2a2a;
+      user-select: none;
     }
 
     /* Адаптивность */
     @media (max-width: 600px) {
-      header, nav {
-        max-width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
-      }
-
       main {
-        margin: 30px 10px 50px;
-        padding: 0 10px;
+        margin: 30px 15px 50px;
+        padding: 30px 20px;
+        font-size: 1.05em;
       }
 
-      .contact-card {
-        padding: 32px 24px 24px 24px;
-        min-height: unset;
+      nav {
+        flex-wrap: wrap;
+        gap: 15px;
       }
 
-      .contact-title {
-        font-size: 1.6em;
-      }
-
-      .contact-list li {
-        font-size: 1em;
+      .social-icons {
+        max-width: 100%;
+        gap: 16px;
       }
     }
   </style>
@@ -205,59 +193,51 @@
     <a href="contact.html">Контакты</a>
     <a href="reviews.html">Отзывы</a>
   </nav>
-  <main>
-    <div class="contact-card" role="region" aria-label="Контактная информация">
-      <h1 class="contact-title">Контакты</h1>
-      <ul class="contact-list">
-        <li>
-          <span class="icon icon-mail" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M4 4h16v16H4V4zm8 7l8-5H4l8 5zm0 2l-8-5v10h16V8l-8 5z" fill="currentColor"/>
-            </svg>
-          </span>
-          Email: <a href="mailto:bekzat@gmail.com" class="contact-link" style="margin-left:5px;">bekzat@gmail.com</a>
-        </li>
-        <li>
-          <span class="icon icon-phone" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1v3.5a1 1 0 01-1 1C10.07 22 2 13.93 2 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" fill="currentColor"/>
-            </svg>
-          </span>
-          Телефон: <a href="tel:+77476160508" class="contact-link" style="margin-left:5px;">+7 747 616 05 08</a>
-        </li>
-        <li>
-          <span class="icon icon-instagram" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm6.5.5a1 1 0 11-2 0 1 1 0 012 0z" fill="currentColor"/>
-            </svg>
-          </span>
-          Instagram: <a href="https://www.instagram.com/bekish_kakish?igsh=MXVlYzNlMG81cjltag%3D%3D&utm_source=qr" target="_blank" class="contact-link" style="margin-left:5px;">@bekish_kakish</a>
-        </li>
-        <li>
-          <span class="icon icon-twitter" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.28 4.28 0 001.88-2.37 8.59 8.59 0 01-2.72 1.04A4.27 4.27 0 0016 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.71a4.25 4.25 0 00-.58 2.16c0 1.49.76 2.8 1.92 3.57-.71-.02-1.38-.22-1.97-.54v.05c0 2.08 1.48 3.81 3.44 4.2-.36.1-.75.15-1.15.15-.28 0-.55-.03-.82-.08.56 1.72 2.18 2.97 4.1 3A8.6 8.6 0 012 19.54c-.36 0-.71-.02-1.06-.06A12.18 12.18 0 006.29 21c7.55 0 11.69-6.26 11.69-11.69 0-.18-.01-.36-.02-.54A8.3 8.3 0 0022.46 6z" fill="currentColor"/>
-            </svg>
-          </span>
-          Twitter: <a href="https://twitter.com/bekabrat" target="_blank" class="contact-link" style="margin-left:5px;">@bekabrat</a>
-        </li>
-        <li>
-          <span class="icon icon-telegram" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M22 4L2 12l5.5 2 2 6 3-4 4.5 2z" fill="currentColor"/>
-            </svg>
-          </span>
-          Telegram: <a href="https://t.me/pizdaproebik" target="_blank" class="contact-link" style="margin-left:5px;">@bekish</a>
-        </li>
-      </ul>
+  <main id="main-content">
+    <h1>Мои проекты</h1>
+
+    <div class="project">
+      <h2>1. Сайт портфолио</h2>
+      <p>Простой и стильный сайт, сделанный на чистом HTML и CSS. Здесь ты сейчас и находишься! 🚀</p>
+      <p><a href="https://bekish-kakish.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Посмотреть сайт</a></p>
     </div>
+
+    <div class="project">
+      <h2>2. Трекер тренировок</h2>
+      <p>Приложение для учёта тренировок и прогресса. Помогает не сходить с пути и качаться грамотно.</p>
+      <p><a href="https://github.com/bekish-kakish/workout-tracker" target="_blank" rel="noopener noreferrer">В РАЗРАБОТКЕ</a></p>
+    </div>
+
+    <div class="project">
+      <h2>3. Чат-бот на AI</h2>
+      <p>Простой чат-бот, который помогает с ответами и поднимает настроение. Правда, иногда шутит слишком остро.</p>
+      <p><a href="project1-code.html" class="code-link">Посмотреть код</a></p>
+    </div>
+
+    <section class="social-icons" aria-label="Социальные сети">
+      <a href="https://www.instagram.com/bekish_kakish" target="_blank" aria-label="Instagram" class="social-link" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm6.5.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+        </svg>
+      </a>
+      <a href="https://twitter.com/bekabrat" target="_blank" aria-label="Twitter" class="social-link" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.28 4.28 0 001.88-2.37 8.59 8.59 0 01-2.72 1.04A4.27 4.27 0 0016 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.71a4.25 4.25 0 00-.58 2.16c0 1.49.76 2.8 1.92 3.57-.71-.02-1.38-.22-1.97-.54v.05c0 2.08 1.48 3.81 3.44 4.2-.36.1-.75.15-1.15.15-.28 0-.55-.03-.82-.08.56 1.72 2.18 2.97 4.1 3A8.6 8.6 0 012 19.54c-.36 0-.71-.02-1.06-.06A12.18 12.18 0 006.29 21c7.55 0 11.69-6.26 11.69-11.69 0-.18-.01-.36-.02-.54A8.3 8.3 0 0022.46 6z"/>
+        </svg>
+      </a>
+      <a href="https://t.me/pizdaproebik" target="_blank" aria-label="Telegram" class="social-link" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M22 4L2 12l5.5 2 2 6 3-4 4.5 2z"/>
+        </svg>
+      </a>
+    </section>
   </main>
   <footer>© 2025 Бекзат Какимов DS-24Б</footer>
 
   <script>
     // Плавное появление контента
     window.addEventListener('load', () => {
-      document.querySelector('main').classList.add('visible');
+      document.getElementById('main-content').classList.add('visible');
     });
   </script>
 </body>
