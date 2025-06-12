@@ -7,50 +7,51 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #1a1a1a 0%, #121212 100%);
-      color: #eee;
+      background: linear-gradient(to bottom, #0d0d0d, #050505);
+      color: #cceeee;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
     }
 
     header {
-      background: #1f1f1f;
+      background: rgba(20, 30, 30, 0.5);
       padding: 25px 20px;
       text-align: center;
       font-size: 2.5em;
       font-weight: 900;
-      color: #a0e7e5;
-      text-shadow: 0 0 15px #00ffff66;
+      color: #66f7f1;
+      text-shadow: 0 0 15px #00ffff55;
       letter-spacing: 2px;
-      border-bottom: 3px solid #33cccc;
+      border-bottom: 1px solid #33cccc55;
+      backdrop-filter: blur(8px);
     }
 
     nav {
-      background: #272727;
+      background: rgba(20, 30, 30, 0.5);
       padding: 12px 0;
       text-align: center;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.5);
-      border-bottom: 2px solid #1f8a8a;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.4);
+      border-bottom: 1px solid #1f8a8a55;
+      backdrop-filter: blur(8px);
     }
 
     nav a {
-      color: #a0e7e5;
+      color: #99f2f2;
       margin: 0 20px;
       text-decoration: none;
-      font-weight: 700;
-      font-size: 1.1em;
-      transition: color 0.3s ease, transform 0.3s ease;
-      padding: 5px 8px;
-      border-radius: 5px;
-      display: inline-block;
+      font-weight: 600;
+      font-size: 1.05em;
+      transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 6px 10px;
+      border-radius: 8px;
     }
 
     nav a:hover,
     nav a:focus {
       color: #ff4c4c;
-      transform: scale(1.1);
-      outline: none;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #ff4c4c55;
     }
 
     main {
@@ -66,25 +67,24 @@
       border-radius: 50%;
       display: block;
       margin: 30px auto 50px;
-      box-shadow: 0 0 15px #00ffff88;
-      transition: box-shadow 0.3s ease;
-      cursor: default;
+      box-shadow: 0 0 20px #00ffff88;
+      transition: box-shadow 0.4s ease;
     }
 
     .profile-photo:hover {
-      box-shadow: 0 0 25px #00ffffcc;
+      box-shadow: 0 0 30px #00ffffcc;
     }
 
     .section {
       margin-bottom: 60px;
-      background: rgba(0, 255, 255, 0.1);
+      background: rgba(20, 30, 30, 0.5);
       border-radius: 16px;
       padding: 25px 30px;
-      box-shadow: 0 0 15px #00ffff66;
+      box-shadow: 0 0 20px #00ffff22;
+      backdrop-filter: blur(12px);
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 1s ease, transform 1s ease;
-      color: #cceeee;
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
     .section.visible {
@@ -106,30 +106,30 @@
     .text-photo img {
       width: 40%;
       border-radius: 12px;
-      box-shadow: 0 0 10px #00ffff66;
+      box-shadow: 0 0 15px #00ffff33;
       transition: box-shadow 0.3s ease;
-      cursor: default;
     }
 
     .text-photo img:hover {
-      box-shadow: 0 0 20px #00ffffcc;
+      box-shadow: 0 0 30px #00ffffcc;
     }
 
     .text-photo p {
       width: 60%;
       line-height: 1.7em;
       font-size: 1.1em;
+      color: #d2fefe;
     }
 
     footer {
       text-align: center;
       padding: 20px 10px;
-      background: #1f1f1f;
-      font-size: 0.95em;
-      color: #888;
+      background: rgba(20, 30, 30, 0.5);
+      font-size: 0.9em;
+      color: #aaa;
       box-shadow: inset 0 1px 3px rgba(0, 255, 255, 0.1);
       user-select: none;
-      margin-top: 40px;
+      backdrop-filter: blur(8px);
     }
 
     @media (max-width: 768px) {
@@ -162,7 +162,7 @@
 
     <div class="section text-photo">
       <p>Привет! Я — Какимов Бекзат. Учусь в AIU на специальность Data Scientist, качаюсь и развиваюсь каждый день. Но не только тело, мозги тоже на прокачке!</p>
-      <img src="aiu.jpg" alt="Тренировка" />
+      <img src="aiu.jpg" alt="AIU" />
     </div>
 
     <div class="section text-photo">
@@ -183,7 +183,6 @@
   <footer>© 2025 Бекзат Какимов DS-24Б</footer>
 
   <script>
-    // Анимация появления секций при скролле
     const sections = document.querySelectorAll('.section');
     const options = {
       threshold: 0.2
@@ -203,4 +202,3 @@
   </script>
 </body>
 </html>
-
